@@ -24,27 +24,27 @@ public class EmpresaService {
 
     public EmpresaDto criar(EmpresaDto empresaDto) {
         try {
-            long procura = this.empresaRepository.count();
-            if (procura > 0L) {
+            long procura = empresaRepository.count();
+            if (procura > 0)
                 throw new EmpresaJaExisteException();
-            } else {
-                Empresa empresa = (Empresa)this.mapper.map(empresaDto, Empresa.class);
-                this.empresaRepository.save(empresa);
-                EmpresaDto retorno = (EmpresaDto)this.mapper.map(empresa, EmpresaDto.class);
-                return retorno;
-            }
-        } catch (DataAccessException var6) {
+            Empresa empresa = mapper.map(empresaDto, Empresa.class);
+            empresaRepository.save(empresa);
+            return mapper.map(empresa, EmpresaDto.class);
+
+        }catch (DataAccessException err) {
             throw new ErroDoServidorException();
         }
     }
 
     public List<EmpresaDto> listar() {
         try {
-            List<Empresa> lista = this.empresaRepository.findAll();
+            List<Empresa> lista = empresaRepository.findAll();
             if (lista.isEmpty()) {
                 throw new NaoExisteEmpresaExciption();
             } else {
-                return (List)lista.stream().map(EmpresaDto::new).collect(Collectors.toList());
+                return lista.stream().
+                        map(EmpresaDto::new).
+                        collect(Collectors.toList());
             }
         } catch (DataAccessException var2) {
             throw new ErroDoServidorException();
@@ -52,28 +52,20 @@ public class EmpresaService {
     }
 
     public void atualizar(String pesquisa, EmpresaDto empresaDto) {
-        try {
-            Optional<Empresa> empresaOptional = this.empresaRepository.findByCnpj(pesquisa);
-            if (empresaOptional.isEmpty()) {
-                throw new NaoExisteEmpresaExciption();
-            } else {
-                Empresa empresa = (Empresa)this.mapper.map(empresaDto, Empresa.class);
-                empresa.setCnpj(((Empresa)empresaOptional.get()).getCnpj());
-                empresa.setId(((Empresa)empresaOptional.get()).getId());
-                this.empresaRepository.save(empresa);
-            }
-        } catch (DataAccessException var5) {
-            throw new ErroDoServidorException();
-        }
+        Empresa empresa = empresaRepository.findByCnpj(pesquisa).
+                orElseThrow(() -> new NaoExisteEmpresaExciption());
+
+        empresa.atualizar(empresaDto);
+        empresaRepository.save(empresa);
     }
 
     public void apagar(String cnpj) {
         try {
-            Optional<Empresa> empresaOptional = this.empresaRepository.findByCnpj(cnpj);
+            Optional<Empresa> empresaOptional = empresaRepository.findByCnpj(cnpj);
             if (empresaOptional.isEmpty()) {
                 throw new NaoExisteEmpresaExciption();
             } else {
-                this.empresaRepository.delete((Empresa)empresaOptional.get());
+                empresaRepository.delete(empresaOptional.get());
             }
         } catch (DataAccessException var3) {
             throw new ErroDoServidorException();

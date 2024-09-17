@@ -1,57 +1,78 @@
 package com.teste.Lanchonete.entities;
 
+import com.teste.Lanchonete.dtos.EmpresaDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
+@Data
 @Table(name = "tb_empresa")
 public class Empresa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NonNull
     private String cnpj;
-
-    @NonNull
     private String razaoSocial;
-
-    @NonNull
     private String nomeFantasia;
-
     private Integer inscMunicipal;
-
     private Integer inscEstadual;
-
-    @NonNull
     private String endereco;
-
-    @NonNull
     private String numero;
-
     private String complemento;
-
-    @NonNull
     private String bairro;
-
-    @NonNull
     private String cidade;
-
-    @NonNull
     private String uf;
-
-    @NonNull
     private Integer cep;
-
-    @NonNull
     private String email;
-
-    @NonNull
     private Integer celular;
+
+    public void atualizar(EmpresaDto empresaDto){
+
+        if(empresaDto.getRazaoSocial() !=null){
+            this.razaoSocial = empresaDto.getRazaoSocial();
+        }
+        if (empresaDto.getNomeFantasia() != null) {
+            this.nomeFantasia = empresaDto.getNomeFantasia();
+        }
+        if (empresaDto.getInscMunicipal() != null) {
+            this.inscMunicipal = empresaDto.getInscMunicipal();
+        }
+        if (empresaDto.getInscEstadual() != null) {
+            this.inscEstadual = empresaDto.getInscEstadual();
+        }
+        if (empresaDto.getEndereco() != null) {
+            this.endereco = empresaDto.getEndereco();
+        }
+        if (empresaDto.getNumero() != null) {
+            this.numero = empresaDto.getNumero();
+        }
+        if (empresaDto.getComplemento() != null) {
+            this.complemento = empresaDto.getComplemento();
+        }
+        if (empresaDto.getBairro() != null) {
+            this.bairro = empresaDto.getBairro();
+        }
+        if (empresaDto.getCidade() != null) {
+            this.cidade = empresaDto.getCidade();
+        }
+        if (empresaDto.getUf() != null) {
+            this.uf = empresaDto.getUf();
+        }
+        if (empresaDto.getCep() != null) {
+            this.cep = empresaDto.getCep();
+        }
+        if (empresaDto.getEmail() != null) {
+            this.email = empresaDto.getEmail();
+        }
+        if (empresaDto.getCelular() != null) {
+            this.celular = empresaDto.getCelular();
+        }
+
+    }
+
+
 
 }
