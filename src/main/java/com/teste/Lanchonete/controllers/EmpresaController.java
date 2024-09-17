@@ -5,6 +5,7 @@ import com.teste.Lanchonete.services.EmpresaService;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,28 +22,34 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class EmpresaController {
     private EmpresaService empresaService;
 
+    @Autowired
+    public EmpresaController(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
+
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody EmpresaDto empresaDto) {
-        EmpresaDto empresa = this.empresaService.criar(empresaDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cnpj}").buildAndExpand(new Object[]{empresa.getCnpj()}).toUri();
+        EmpresaDto empresa = empresaService.criar(empresaDto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cnpj}").
+                buildAndExpand(empresa.getCnpj()).toUri();
         return ResponseEntity.created(uri).body("Empresa criada!");
     }
 
     @GetMapping({"/listarTodos"})
     public ResponseEntity<List<EmpresaDto>> listarTudo() {
-        List<EmpresaDto> lista = this.empresaService.listar();
+        List<EmpresaDto> lista = empresaService.listar();
         return ResponseEntity.ok().body(lista);
     }
 
     @PatchMapping({"/atualizar/{pesquisa}"})
     public ResponseEntity<Object> atualizar(@PathVariable String pesquisa, @RequestBody EmpresaDto empresaDto) {
-        this.empresaService.atualizar(pesquisa, empresaDto);
+        empresaService.atualizar(pesquisa, empresaDto);
         return ResponseEntity.ok("Dados da empresa atualizados!");
     }
 
     @DeleteMapping({"apagar/{cnpj}"})
     public ResponseEntity<Object> apagar(@PathVariable String cnpj) {
-        this.empresaService.apagar(cnpj);
+        empresaService.apagar(cnpj);
         return ResponseEntity.ok("Empresa apagada com sucesso!");
     }
 }
