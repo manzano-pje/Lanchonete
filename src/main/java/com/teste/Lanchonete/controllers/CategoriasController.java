@@ -48,4 +48,10 @@ public class CategoriasController {
         return ResponseEntity.ok("Categoria atualizada com sucesso!");
     }
 
+    @DeleteMapping("{nome}")
+    public ResponseEntity<Object> excluirCategoria(@PathVariable @Valid String nome){
+        categoriaService.excluirCategoria(nome);
+        return ResponseEntity.ok("Categoria excluida com sucesso");
+    }
+
 }

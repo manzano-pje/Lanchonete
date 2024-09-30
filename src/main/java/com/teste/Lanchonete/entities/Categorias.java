@@ -1,7 +1,6 @@
 package com.teste.Lanchonete.entities;
 
 import com.teste.Lanchonete.dtos.CategoriasDto;
-import com.teste.Lanchonete.dtos.EmpresaDto;
 import jakarta.persistence.*;
 import lombok.*;
 

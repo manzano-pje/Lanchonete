@@ -14,7 +14,7 @@ public class CategoriasDto {
     String nomeCategoria;
 
     public CategoriasDto(Categorias categorias) {
-        this.idCategoria = idCategoria;
-        this.nomeCategoria = nomeCategoria;
+        this.idCategoria = categorias.getIdCategoria();
+        this.nomeCategoria = categorias.getNomeCategoria();
     }
 }

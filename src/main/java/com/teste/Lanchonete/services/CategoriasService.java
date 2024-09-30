@@ -74,4 +74,14 @@ public class CategoriasService {
             throw new ErroDoServidorException();
         }
     }
+
+    public void excluirCategoria(String nome){
+        try{
+            Categorias categoriasOptional = categoriasRepository.findBynomeCategoria(nome).
+                orElseThrow(NaoExitemCategoriasException::new);
+            categoriasRepository.delete(categoriasOptional);
+        }catch (DataAccessException err){
+            throw new ErroDoServidorException();
+        }
+    }
 }
