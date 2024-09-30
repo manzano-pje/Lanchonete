@@ -1,23 +1,27 @@
 package com.teste.Lanchonete.entities;
 
+import com.teste.Lanchonete.dtos.CategoriasDto;
+import com.teste.Lanchonete.dtos.EmpresaDto;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "tb_categoria")
 public class Categorias {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Integer idCategoria;
     String nomeCategoria;
 
+    public void atualizar(CategoriasDto categoriasDto) {
+        if (categoriasDto.getNomeCategoria() != null) {
+            this.nomeCategoria = categoriasDto.getNomeCategoria();
+        }
+    }
 
     /*********************
      * RELACIONAMENTOS

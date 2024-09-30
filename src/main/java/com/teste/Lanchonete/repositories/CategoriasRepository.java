@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CategoriasRepository extends JpaRepository<Categorias, Integer> {
 
-    Optional<Categorias> findByNome(@NonNull String nomeCategoria);
+    Optional<Categorias> findBynomeCategoria(@NonNull String nomeCategoria);
 }
