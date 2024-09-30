@@ -4,6 +4,8 @@ import com.teste.Lanchonete.dtos.CategoriasDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,11 +28,7 @@ public class Categorias {
      * RELACIONAMENTOS
      *********************/
 
-//    @OneToMany(mappedBy = "categorias")
-//    private List<Produtos> produtosList;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "idGrupo",insertable = false,updatable = false)
-//    private Grupo grupo;
+    @OneToMany(mappedBy = "categorias")
+    private List<Produtos> produtosList;
 
 }

@@ -7,12 +7,10 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Table(name = "tb_fornecedor")
-public class Fornecedor {
+public class Fornecedores {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +30,12 @@ public class Fornecedor {
     String telefone;
 
 
-//    /*******************
-//     * RELACIONAMENTOS
-//     *******************/
-//
-//    @OneToMany(mappedBy = "fornecedor")
-//    private List<Produtos> produtosList;
+    /*******************
+     * RELACIONAMENTOS
+     *******************/
+
+    @OneToMany(mappedBy = "fornecedores")
+    private List<Produtos> produtosList;
 
 
 }
