@@ -35,13 +35,13 @@ public class FornecedoresDto {
     @Size(min = 2, max = 2)
     String uf;
     @NonNull
-    @Pattern(regexp = "dd(5)-//dd(3)")
+    @Pattern(regexp = "\\d{5}-\\d{3}",message = "O cep deve ser no fornato XXXXX-XXX")
     String cep;
     @NonNull
     @Email
     String email;
     @NonNull
-    @Pattern(regexp = "(//dd(2) //dd(5)-//dd(4))")
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
     String telefone;
 
     public FornecedoresDto(Fornecedores fornecedores) {

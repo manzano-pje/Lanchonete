@@ -37,6 +37,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({FornecedorJaExisteException.class})
+    public ResponseEntity<Object> handleCategoriaJaExisteException(FornecedorJaExisteException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({NaoExistemFornecedoresException.class})
+    public ResponseEntity<Object> handleCategoriaNaoExisteException(NaoExistemFornecedoresException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    }
+
+    // Captura erros gerais de sistema
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, Object> errors = new HashMap<>();
@@ -48,7 +59,6 @@ public class GlobalExceptionHandler {
         // Cria uma instância de ErrorResponse
         ErrorResponse errorResponse = new ErrorResponse("Erro de validação", 400);
         errors.forEach((field, message) -> errorResponse.paraJson().put(field, message));
-
         return ResponseEntity.badRequest().body(errorResponse.paraJson());
     }
 

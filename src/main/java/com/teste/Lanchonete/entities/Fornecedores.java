@@ -7,8 +7,8 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
 @Table(name = "tb_fornecedor")
 public class Fornecedores {
 
@@ -36,6 +36,4 @@ public class Fornecedores {
 
     @OneToMany(mappedBy = "fornecedores")
     private List<Produtos> produtosList;
-
-
 }

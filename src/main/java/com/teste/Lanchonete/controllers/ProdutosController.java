@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/produtos")
 public class ProdutosController {
 
-    private final ProdutosService produtosService;
+//    private final ProdutosService produtosService;
 
-    @PostMapping
-    public ResponseEntity<ProdutosDto> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
-        ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
-        return null;
-    }
+//    @PostMapping
+//    public ResponseEntity<ProdutosDto> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
+//        ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
+//        return null;
+//    }
 }
