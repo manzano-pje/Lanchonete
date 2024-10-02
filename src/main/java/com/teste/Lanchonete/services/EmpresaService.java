@@ -4,7 +4,7 @@ import com.teste.Lanchonete.dtos.EmpresaDto;
 import com.teste.Lanchonete.entities.Empresa;
 import com.teste.Lanchonete.exceptions.EmpresaJaExisteException;
 import com.teste.Lanchonete.exceptions.ErroDoServidorException;
-import com.teste.Lanchonete.exceptions.NaoExisteEmpresaExciption;
+import com.teste.Lanchonete.exceptions.NaoExisteEmpresaException;
 import com.teste.Lanchonete.repositories.EmpresaRepository;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class EmpresaService {
     private final EmpresaRepository empresaRepository;
     private final ModelMapper mapper;
 
-    public EmpresaDto criar(EmpresaDto empresaDto) {
+    public EmpresaDto criarEmpresa(EmpresaDto empresaDto) {
         try {
             long procura = empresaRepository.count();
             if (procura > 0)
@@ -30,13 +30,12 @@ public class EmpresaService {
             Empresa empresa = mapper.map(empresaDto, Empresa.class);
             empresaRepository.save(empresa);
             return mapper.map(empresa, EmpresaDto.class);
-
         }catch (DataAccessException err) {
             throw new ErroDoServidorException();
         }
     }
 
-    public List<EmpresaDto> listar() {
+    public List<EmpresaDto> listarEmpresa() {
         try {
             List<Empresa> lista = empresaRepository.findAll();
             if (lista.isEmpty()) {
@@ -54,7 +53,6 @@ public class EmpresaService {
     public void atualizar(String pesquisa, EmpresaDto empresaDto) {
         Empresa empresa = empresaRepository.findByCnpj(pesquisa).
                 orElseThrow(() -> new NaoExisteEmpresaExciption());
-
         empresa.atualizar(empresaDto);
         empresaRepository.save(empresa);
     }

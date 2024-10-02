@@ -1,10 +1,7 @@
 package com.teste.Lanchonete.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "tb_categoria")
-public class Categoria {
+public class Categorias {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +23,11 @@ public class Categoria {
      * RELACIONAMENTOS
      *********************/
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Produtos> produtosList;
-
-    @ManyToOne
-    @JoinColumn(name = "idGrupo",insertable = false,updatable = false)
-    private Grupo grupo;
+//    @OneToMany(mappedBy = "categorias")
+//    private List<Produtos> produtosList;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "idGrupo",insertable = false,updatable = false)
+//    private Grupo grupo;
 
 }

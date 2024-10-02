@@ -30,14 +30,14 @@ public class Produtos {
      * RELACIONAMENTOS
      ******************/
 
-    @OneToMany(mappedBy = "produtos")
-    private List<UnidadeMedida> unidadeMedidaList;
-
-    @ManyToOne
-    @JoinColumn(name = "idFornecedor", insertable = false, updatable = false)
-    private Fornecedor fornecedor;
-
-    @ManyToOne
-    @JoinColumn(name = "idCategoria", insertable = false,updatable = false)
-    private Categoria categoria;
+//    @OneToMany(mappedBy = "produtos")
+//    private List<UnidadeMedida> unidadeMedidaList;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "idFornecedor", insertable = false, updatable = false)
+//    private Fornecedor fornecedor;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "idCategoria", insertable = false,updatable = false)
+//    private Categoria categoria;
 }

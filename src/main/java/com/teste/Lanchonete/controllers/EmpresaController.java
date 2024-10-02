@@ -4,7 +4,8 @@ import com.teste.Lanchonete.dtos.EmpresaDto;
 import com.teste.Lanchonete.services.EmpresaService;
 import java.net.URI;
 import java.util.List;
-
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping({"v1/empresa"})
 public class EmpresaController {
+
     private EmpresaService empresaService;
 
     @Autowired

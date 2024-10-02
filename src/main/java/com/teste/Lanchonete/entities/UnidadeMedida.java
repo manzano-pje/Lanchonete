@@ -21,7 +21,7 @@ public class UnidadeMedida {
      * RELACIONAMENTOS
      ******************/
 
-    @ManyToOne
-    @JoinColumn(name = "idProdutos", insertable = false, updatable = false)
-    private Produtos produtos;
+//    @ManyToOne
+//    @JoinColumn(name = "idProdutos", insertable = false, updatable = false)
+//    private Produtos produtos;
 }

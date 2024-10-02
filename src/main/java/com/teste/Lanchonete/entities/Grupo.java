@@ -22,10 +22,10 @@ public class Grupo {
      * RELACIONAMENTOS
      *********************/
 
-    @OneToMany
-    private List<Categoria> categoriaList;
-
-    @ManyToOne
-    @JoinColumn(name = "idSubGrupo",insertable = false,updatable = false)
-    private SubGrupo subGrupo;
+//    @OneToMany
+//    private List<Categoria> categoriaList;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "idSubGrupo",insertable = false,updatable = false)
+//    private SubGrupo subGrupo;
 }

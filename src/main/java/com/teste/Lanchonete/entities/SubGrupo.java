@@ -19,9 +19,9 @@ public class SubGrupo {
 
     /*********************
      * RELACIONAMENTOS
-     *********************/
-
-    @ManyToOne
-    @JoinColumn(name = "idGrupo",insertable = false,updatable = false)
-    private Grupo grupo;
+//     *********************/
+//
+//    @ManyToOne
+//    @JoinColumn(name = "idGrupo",insertable = false,updatable = false)
+//    private Grupo grupo;
 }

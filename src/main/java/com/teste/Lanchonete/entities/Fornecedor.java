@@ -32,12 +32,12 @@ public class Fornecedor {
     String telefone;
 
 
-    /*******************
-     * RELACIONAMENTOS
-     *******************/
-
-    @OneToMany(mappedBy = "fornecedor")
-    private List<Produtos> produtosList;
+//    /*******************
+//     * RELACIONAMENTOS
+//     *******************/
+//
+//    @OneToMany(mappedBy = "fornecedor")
+//    private List<Produtos> produtosList;
 
 
 }
