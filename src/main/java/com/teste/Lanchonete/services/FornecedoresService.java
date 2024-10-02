@@ -1,10 +1,11 @@
 package com.teste.Lanchonete.services;
 
+import com.teste.Lanchonete.dtos.CategoriasDto;
 import com.teste.Lanchonete.dtos.FornecedoresDto;
+import com.teste.Lanchonete.entities.Categorias;
+import com.teste.Lanchonete.entities.Empresa;
 import com.teste.Lanchonete.entities.Fornecedores;
-import com.teste.Lanchonete.exceptions.ErroDoServidorException;
-import com.teste.Lanchonete.exceptions.FornecedorJaExisteException;
-import com.teste.Lanchonete.exceptions.NaoExistemFornecedoresException;
+import com.teste.Lanchonete.exceptions.*;
 import com.teste.Lanchonete.repositories.FornecedoresRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,4 +53,25 @@ public class FornecedoresService {
             throw new ErroDoServidorException();
         }
     }
+
+    public FornecedoresDto listarUmFornecedor(String fornecedor){
+        try{
+            Optional<Fornecedores> fornecedorOptional = fornecedoresRepository.findByNome(fornecedor);
+            if(fornecedorOptional.isEmpty()){
+                throw new NaoExistemFornecedoresException();
+            }
+            return mapper.map(fornecedorOptional,FornecedoresDto.class);
+        }catch (DataAccessException err){
+            throw new ErroDoServidorException();
+        }
+    }
 }
+//ublic CategoriasDto listarUmaCategoria(String nome){
+//    try{
+//        Categorias categoriasOptional = categoriasRepository.findBynomeCategoria(nome).
+//                orElseThrow(NaoExitemCategoriasException::new);
+//        return mapper.map(categoriasOptional, com.teste.Lanchonete.dtos.CategoriasDto.class);
+//    }catch (DataAccessException err){
+//        throw new ErroDoServidorException();
+//    }
+//}

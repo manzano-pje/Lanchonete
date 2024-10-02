@@ -31,4 +31,10 @@ public class FornecedoresController {
         List<FornecedoresDto> fornecedores = fornecedoresService.listarTodosFornecedores();
         return ResponseEntity.ok().body(fornecedores);
     }
+
+    @GetMapping("/fornecedor/{fornecedor}")
+    public ResponseEntity<FornecedoresDto> listarUmFornecedor(@PathVariable @Valid String fornecedor){
+        FornecedoresDto fornecedorDto = fornecedoresService.listarUmFornecedor(fornecedor);
+        return ResponseEntity.ok(fornecedorDto);
+    }
 }
