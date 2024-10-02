@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
 //        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
 //    }
 
-//    @ExceptionHandler({CategoriaNaoExisteException.class})
-//    public ResponseEntity<Object> handleCategoriaNaoExisteException(CategoriaNaoExisteException ex) {
-//        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
-//    }
+    @ExceptionHandler({CategoriaJaExisteException.class})
+    public ResponseEntity<Object> handleCategoriaJaExisteException(CategoriaJaExisteException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
+    }
 
 
 }
