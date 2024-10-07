@@ -4,9 +4,9 @@ import com.teste.Lanchonete.dtos.EmpresaDto;
 import com.teste.Lanchonete.services.EmpresaService;
 import java.net.URI;
 import java.util.List;
-
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,29 +25,34 @@ public class EmpresaController {
 
     private EmpresaService empresaService;
 
+    @Autowired
+    public EmpresaController(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
+
     @PostMapping
-    public ResponseEntity<Object> criarEmpresa(@RequestBody @Valid EmpresaDto empresaDto) {
-        EmpresaDto empresa = empresaService.criarEmpresa(empresaDto);
+    public ResponseEntity<Object> criar(@RequestBody EmpresaDto empresaDto) {
+        EmpresaDto empresa = empresaService.criar(empresaDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cnpj}").
                 buildAndExpand(empresa.getCnpj()).toUri();
         return ResponseEntity.created(uri).body("Empresa criada!");
     }
 
-    @GetMapping
-    public ResponseEntity<List<EmpresaDto>> listarEmpresa() {
-        List<EmpresaDto> lista = empresaService.listarEmpresa();
+    @GetMapping({"/listarTodos"})
+    public ResponseEntity<List<EmpresaDto>> listarTudo() {
+        List<EmpresaDto> lista = empresaService.listar();
         return ResponseEntity.ok().body(lista);
     }
 
-    @PatchMapping({"/atualizar/{cnpj}"})
-    public ResponseEntity<Object> atualizarEmpresa(@PathVariable String cnpj, @RequestBody @Valid EmpresaDto empresaDto) {
-        empresaService.atualizarEmpresa(cnpj, empresaDto);
+    @PatchMapping({"/atualizar/{pesquisa}"})
+    public ResponseEntity<Object> atualizar(@PathVariable String pesquisa, @RequestBody EmpresaDto empresaDto) {
+        empresaService.atualizar(pesquisa, empresaDto);
         return ResponseEntity.ok("Dados da empresa atualizados!");
     }
 
     @DeleteMapping({"apagar/{cnpj}"})
-    public ResponseEntity<Object> apagarEmpresa(@PathVariable @Valid String cnpj) {
-        empresaService.apagarEmpresa(cnpj);
+    public ResponseEntity<Object> apagar(@PathVariable String cnpj) {
+        empresaService.apagar(cnpj);
         return ResponseEntity.ok("Empresa apagada com sucesso!");
     }
 }
