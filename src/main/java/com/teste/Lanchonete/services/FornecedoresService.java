@@ -1,12 +1,11 @@
 package com.teste.Lanchonete.services;
 
-import com.teste.Lanchonete.dtos.CategoriasDto;
+import com.teste.Lanchonete.configuracoes.FormatarTexto;
 import com.teste.Lanchonete.dtos.FornecedoresDto;
-import com.teste.Lanchonete.entities.Categorias;
-import com.teste.Lanchonete.entities.Empresa;
 import com.teste.Lanchonete.entities.Fornecedores;
 import com.teste.Lanchonete.exceptions.*;
 import com.teste.Lanchonete.repositories.FornecedoresRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
@@ -24,13 +23,16 @@ public class FornecedoresService {
 
     private final FornecedoresRepository fornecedoresRepository;
     private final ModelMapper mapper;
+    private final FormatarTexto formatarTexto;
 
     public FornecedoresDto criarFornecedores(FornecedoresDto fornecedoresDto){
         try{
+            String fornecedorFormatado = FormatarTexto.formatarTexto(fornecedoresDto.getNome());
             Optional<Fornecedores> fornecedoresOptional = fornecedoresRepository.findByCnpj(fornecedoresDto.getCnpj());
             if(fornecedoresOptional.isPresent()){
                 throw new FornecedorJaExisteException();
             }
+            fornecedoresDto.setNome(fornecedorFormatado);
             Fornecedores fornecedores = mapper.map(fornecedoresDto, Fornecedores.class);
             fornecedoresRepository.save(fornecedores);
             return mapper.map(fornecedores, FornecedoresDto.class);
@@ -56,22 +58,34 @@ public class FornecedoresService {
 
     public FornecedoresDto listarUmFornecedor(String fornecedor){
         try{
-            Optional<Fornecedores> fornecedorOptional = fornecedoresRepository.findByNome(fornecedor);
-            if(fornecedorOptional.isEmpty()){
-                throw new NaoExistemFornecedoresException();
-            }
-            return mapper.map(fornecedorOptional,FornecedoresDto.class);
+            Fornecedores fornecedores = fornecedoresRepository.findByNome(fornecedor).
+                    orElseThrow(NaoExistemFornecedoresException::new);
+            return mapper.map(fornecedores,FornecedoresDto.class);
+        }catch (DataAccessException err){
+            throw new ErroDoServidorException();
+        }
+    }
+
+    public void alterarFornecedor(String fornecedor, FornecedoresDto fornecedoresDto){
+        try {
+            Fornecedores dadosFornecedor = fornecedoresRepository.findByNome(fornecedor).
+                    orElseThrow(NaoExistemFornecedoresException::new);
+
+           dadosFornecedor.atualizar(fornecedoresDto);
+            fornecedoresRepository.save(dadosFornecedor);
+        }catch (DataAccessException err){
+            throw new ErroDoServidorException();
+        }
+    }
+
+    public void excluirFornecedor(String fornecedor){
+        try {
+            Fornecedores fornecedores = fornecedoresRepository.findByNome(fornecedor).
+                    orElseThrow(NaoExistemFornecedoresException::new);
+
+            fornecedoresRepository.deleteById(fornecedores.getIdFornecedor());
         }catch (DataAccessException err){
             throw new ErroDoServidorException();
         }
     }
 }
-//ublic CategoriasDto listarUmaCategoria(String nome){
-//    try{
-//        Categorias categoriasOptional = categoriasRepository.findBynomeCategoria(nome).
-//                orElseThrow(NaoExitemCategoriasException::new);
-//        return mapper.map(categoriasOptional, com.teste.Lanchonete.dtos.CategoriasDto.class);
-//    }catch (DataAccessException err){
-//        throw new ErroDoServidorException();
-//    }
-//}

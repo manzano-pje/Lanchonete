@@ -70,9 +70,5 @@ public class Empresa {
         if (empresaDto.getCelular() != null) {
             this.celular = empresaDto.getCelular();
         }
-
     }
-
-
-
 }

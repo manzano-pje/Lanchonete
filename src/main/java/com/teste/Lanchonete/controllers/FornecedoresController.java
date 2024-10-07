@@ -23,7 +23,8 @@ public class FornecedoresController {
         FornecedoresDto fornecedores = fornecedoresService.criarFornecedores(fornecedoresDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/cnpj}").
                 buildAndExpand(fornecedores.getCnpj()).toUri();
-        return ResponseEntity.created(uri).body("Fornecedor cadastrado com sucesso!");
+        String retorno = "Fornecedor " + fornecedoresDto.getNome() + " cadastrado com sucesso!";
+        return ResponseEntity.created(uri).body(retorno);
     }
 
     @GetMapping
@@ -36,5 +37,18 @@ public class FornecedoresController {
     public ResponseEntity<FornecedoresDto> listarUmFornecedor(@PathVariable @Valid String fornecedor){
         FornecedoresDto fornecedorDto = fornecedoresService.listarUmFornecedor(fornecedor);
         return ResponseEntity.ok(fornecedorDto);
+    }
+
+    @PatchMapping("/atualizarFornecedor/{fornecedor}")
+    public ResponseEntity<Object> AlterarFornecedor(@PathVariable @Valid String fornecedor,
+                                                    @RequestBody @Valid FornecedoresDto fornecedoresDto){
+        fornecedoresService.alterarFornecedor(fornecedor, fornecedoresDto);
+        return ResponseEntity.ok("Atualização do " + fornecedor + "efetuada com sucesso!");
+    }
+
+    @DeleteMapping("/{fornecedor}")
+    public ResponseEntity<Object> excluirFornecedor(@PathVariable @Valid String fornecedor){
+        fornecedoresService.excluirFornecedor(fornecedor);
+        return  ResponseEntity.ok("Fornecedor " + fornecedor + "excluído com sucesso!");
     }
 }

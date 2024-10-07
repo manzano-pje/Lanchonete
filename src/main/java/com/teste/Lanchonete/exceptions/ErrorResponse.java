@@ -2,7 +2,6 @@ package com.teste.Lanchonete.exceptions;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Generated;
 
 public class ErrorResponse extends RuntimeException {
     private String mensagem;

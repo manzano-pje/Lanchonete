@@ -18,11 +18,12 @@ public class FornecedoresDto {
     @NonNull
     String nome;
     @NonNull
-    @CNPJ
+    @CNPJ(message = "Formato do CNPJ inválido. Escreva o CNPJ no formato '99.999.999\\99999-99'")
     String cnpj;
     String inscMunicipal;
     String inscEstadual;
     @NonNull
+    @Size(min = 3, message = "O campo rua precisa ter no mínimo 3 caracteres!")
     String endereco;
     @NonNull
     String numero;
@@ -38,7 +39,7 @@ public class FornecedoresDto {
     @Pattern(regexp = "\\d{5}-\\d{3}",message = "O cep deve ser no fornato XXXXX-XXX")
     String cep;
     @NonNull
-    @Email
+    @Email(message = "Formato do e-mail inválido")
     String email;
     @NonNull
     @Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
