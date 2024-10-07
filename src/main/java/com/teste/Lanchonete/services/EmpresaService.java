@@ -7,7 +7,6 @@ import com.teste.Lanchonete.exceptions.ErroDoServidorException;
 import com.teste.Lanchonete.exceptions.NaoExisteEmpresaException;
 import com.teste.Lanchonete.repositories.EmpresaRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;

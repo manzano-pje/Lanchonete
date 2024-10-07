@@ -1,9 +1,8 @@
 package com.teste.Lanchonete.entities;
 
+import com.teste.Lanchonete.Enums.UnidadeMedida;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,23 +20,19 @@ public class Produtos {
     String nome;
     Integer idFornecedor;
     Integer idCategoria;
-    Integer idGrupo;
-    Integer idSubgrupo;
-    Integer idUnidadeMedida;
+    @Enumerated(EnumType.STRING)
+    private UnidadeMedida unidadeMedida;
     Double valor;
 
     /******************
      * RELACIONAMENTOS
      ******************/
 
-//    @OneToMany(mappedBy = "produtos")
-//    private List<UnidadeMedida> unidadeMedidaList;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "idFornecedor", insertable = false, updatable = false)
-//    private Fornecedor fornecedor;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "idCategoria", insertable = false,updatable = false)
-//    private Categoria categoria;
+    @ManyToOne
+    @JoinColumn(name = "idFornecedor", insertable = false, updatable = false)
+    private Fornecedores fornecedores;
+
+    @ManyToOne
+    @JoinColumn(name = "idCategoria", insertable = false,updatable = false)
+    private Categorias categorias;
 }

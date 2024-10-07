@@ -17,17 +17,17 @@ public class Empresa {
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
-    private Integer inscMunicipal;
-    private Integer inscEstadual;
+    private String inscMunicipal;
+    private String inscEstadual;
     private String endereco;
     private String numero;
     private String complemento;
     private String bairro;
     private String cidade;
     private String uf;
-    private Integer cep;
+    private String cep;
     private String email;
-    private Integer celular;
+    private String celular;
 
     public void atualizar(EmpresaDto empresaDto){
 
@@ -70,9 +70,5 @@ public class Empresa {
         if (empresaDto.getCelular() != null) {
             this.celular = empresaDto.getCelular();
         }
-
     }
-
-
-
 }
