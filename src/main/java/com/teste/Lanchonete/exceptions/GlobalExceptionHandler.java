@@ -36,6 +36,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({CategoriaNaoExisteExceptions.class})
+    public ResponseEntity<Object> handleCategoriaNaoExisteException(CategoriaNaoExisteExceptions ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler({FornecedorJaExisteException.class})
     public ResponseEntity<Object> handleCategoriaJaExisteException(FornecedorJaExisteException ex) {
         return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
@@ -45,6 +50,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleCategoriaNaoExisteException(NaoExistemFornecedoresException ex) {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({ProdutoJaCadastradoExceptions.class})
+    public ResponseEntity<Object> handleProdutoJaCadastradoExceptions(ProdutoJaCadastradoExceptions ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    }
+
 
     // Captura erros gerais de sistema
     @ExceptionHandler(MethodArgumentNotValidException.class)

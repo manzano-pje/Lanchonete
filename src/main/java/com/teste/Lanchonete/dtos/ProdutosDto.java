@@ -1,5 +1,6 @@
 package com.teste.Lanchonete.dtos;
 
+import com.teste.Lanchonete.Enums.UnidadeMedida;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +11,9 @@ import lombok.NoArgsConstructor;
 public class ProdutosDto {
 
     Integer idProdutoId;
-    String nome;
-    String fornecedor;
-    String categoria;
-    String grupo;
-    String subgrupo;
-    String unidadeMedida;
-    Double valor;
+    String nomeProduto;
+    Integer fornecedor;
+    Integer categoria;
+    UnidadeMedida unidadeMedida;
+    Double valorProduto;
 }

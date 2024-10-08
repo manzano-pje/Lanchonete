@@ -16,12 +16,14 @@ public class Produtos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idProdutoId;
+    String nomeProduto;
 
-    String nome;
     Integer idFornecedor;
     Integer idCategoria;
+
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
+
     Double valor;
 
     /******************
