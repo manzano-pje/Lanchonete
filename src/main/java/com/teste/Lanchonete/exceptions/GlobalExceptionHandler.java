@@ -46,6 +46,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({ProdutoJaExisteException.class})
+    public ResponseEntity<Object> handleProdutoJaExisteException(ProdutoJaExisteException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
+    }
+
+
     // Captura erros gerais de sistema
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
