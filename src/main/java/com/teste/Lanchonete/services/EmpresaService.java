@@ -37,27 +37,35 @@ public class EmpresaService {
     public List<EmpresaDto> listarEmpresa() {
         try {
             List<Empresa> lista = empresaRepository.findAll();
-            if (lista.isEmpty())
-                throw new NaoExisteEmpresaException();
-
-            return lista.stream().
-                   map(EmpresaDto::new).
-                   collect(Collectors.toList());
-        } catch (DataAccessException err) {
+            if (lista.isEmpty()) {
+                throw new NaoExisteEmpresaExciption();
+            } else {
+                return lista.stream().
+                        map(EmpresaDto::new).
+                        collect(Collectors.toList());
+            }
+        } catch (DataAccessException var2) {
             throw new ErroDoServidorException();
         }
     }
 
-    public void atualizarEmpresa(String cnpj, EmpresaDto empresaDto) {
-        Empresa empresa = empresaRepository.findByCnpj(cnpj).
-                orElseThrow(NaoExisteEmpresaException::new);
+    public void atualizar(String pesquisa, EmpresaDto empresaDto) {
+        Empresa empresa = empresaRepository.findByCnpj(pesquisa).
+                orElseThrow(() -> new NaoExisteEmpresaExciption());
         empresa.atualizar(empresaDto);
         empresaRepository.save(empresa);
     }
 
-    public void apagarEmpresa(String cnpj) {
-        Empresa empresa = empresaRepository.findByCnpj(cnpj).
-                orElseThrow(NaoExisteEmpresaException::new);
-        empresaRepository.delete(empresa);
+    public void apagar(String cnpj) {
+        try {
+            Optional<Empresa> empresaOptional = empresaRepository.findByCnpj(cnpj);
+            if (empresaOptional.isEmpty()) {
+                throw new NaoExisteEmpresaExciption();
+            } else {
+                empresaRepository.delete(empresaOptional.get());
+            }
+        } catch (DataAccessException var3) {
+            throw new ErroDoServidorException();
+        }
     }
 }

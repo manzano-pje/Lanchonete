@@ -25,9 +25,8 @@ public class ProdutosService {
     private final CategoriasRepository categoriasRepository;
     private final FornecedoresRepository fornecedoresRepository;
     private final ModelMapper mapper;
-
+  
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
-
         Optional<Produtos> produtos = produtosRepository.findById(produtosDto.getIdProduto());
         if(produtos.isPresent()){
             throw new ProdutoJaExisteException();
@@ -47,6 +46,4 @@ public class ProdutosService {
 
         return null;
     }
-
-
 }
