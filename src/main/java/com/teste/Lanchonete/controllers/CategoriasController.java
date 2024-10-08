@@ -35,22 +35,21 @@ public class CategoriasController {
         return ResponseEntity.ok().body(retorno);
     }
 
-    @GetMapping("/listar/{nome}")
-    public ResponseEntity<CategoriasDto> listarUmaCategoria(@PathVariable @Valid String nome){
-        CategoriasDto retorno = categoriaService.listarUmaCategoria(nome);
+    @GetMapping("/listar/{idCategorias}")
+    public ResponseEntity<CategoriasDto> listarUmaCategoria(@PathVariable @Valid Integer idCategorias){
+        CategoriasDto retorno = categoriaService.listarUmaCategoria(idCategorias);
         return ResponseEntity.ok().body(retorno);
     }
 
-    @PatchMapping("/alterar/{nome}")
-    public ResponseEntity<Object> atualizarCategoria(@PathVariable @Valid String nome,
-                                                            @RequestBody @Valid CategoriasDto categoriasDto){
-        categoriaService.atualizarCategoria(nome, categoriasDto);
+    @PatchMapping("/alterar/")
+    public ResponseEntity<Object> atualizarCategoria(@RequestBody @Valid CategoriasDto categoriasDto){
+        categoriaService.atualizarCategoria(categoriasDto);
         return ResponseEntity.ok("Categoria atualizada com sucesso!");
     }
 
-    @DeleteMapping("{nome}")
-    public ResponseEntity<Object> excluirCategoria(@PathVariable @Valid String nome){
-        categoriaService.excluirCategoria(nome);
+    @DeleteMapping("{idCategorias}")
+    public ResponseEntity<Object> excluirCategoria(@PathVariable @Valid Integer idCategorias){
+        categoriaService.excluirCategoria(idCategorias);
         return ResponseEntity.ok("Categoria excluida com sucesso");
     }
 
