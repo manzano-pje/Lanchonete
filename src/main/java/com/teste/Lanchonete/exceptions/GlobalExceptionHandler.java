@@ -36,6 +36,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({CategoriaNaoExisteExceptions.class})
+    public ResponseEntity<Object> handleCategoriaNaoExisteException(CategoriaNaoExisteExceptions ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler({FornecedorJaExisteException.class})
     public ResponseEntity<Object> handleCategoriaJaExisteException(FornecedorJaExisteException ex) {
         return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);

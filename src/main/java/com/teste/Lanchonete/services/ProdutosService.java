@@ -26,7 +26,7 @@ public class ProdutosService {
     private final CategoriasRepository categoriasRepository;
     private final FornecedoresRepository fornecedoresRepository;
     private final ModelMapper mapper;
-
+  
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
         Optional<Produtos> produtosOptional = produtosRepository.findById(produtosDto.getIdProduto());
         if(produtosOptional.isPresent()){
@@ -51,6 +51,4 @@ public class ProdutosService {
         produtosRepository.save(produtos);
         return mapper.map(produtos, ProdutosDto.class);
     }
-
-
 }

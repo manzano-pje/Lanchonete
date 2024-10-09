@@ -29,4 +29,5 @@ public class ProdutosController {
                 buildAndExpand(retorno.getNomeProduto()).toUri();
         return ResponseEntity.created(uri).body("Produto " + retorno.getNomeProduto() + " cadastrado com sucesso!");
     }
+
 }
