@@ -17,7 +17,7 @@ public class Produtos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idProduto;
 
-    String nome;
+    String nomeProduto;
     Integer idFornecedor;
     Integer idCategoria;
     @Enumerated(EnumType.STRING)
@@ -32,10 +32,10 @@ public class Produtos {
      ******************/
 
     @ManyToOne
-    @JoinColumn(name = "idFornecedor")
+    @JoinColumn(name = "idFornecedor", insertable=false, updatable=false)
     private Fornecedores fornecedores;
 
     @ManyToOne
-    @JoinColumn(name = "idCategoria")
+    @JoinColumn(name = "idCategoria", insertable=false, updatable=false)
     private Categorias categorias;
 }
