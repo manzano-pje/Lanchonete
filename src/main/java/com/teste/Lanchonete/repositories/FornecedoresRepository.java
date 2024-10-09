@@ -11,4 +11,5 @@ public interface FornecedoresRepository extends JpaRepository<Fornecedores, Inte
 
     Optional<Fornecedores> findByCnpj(String cnpj);
     Optional<Fornecedores> findByNome(String nome);
+    Boolean findByFornecedor(Integer fornecedor);
 }

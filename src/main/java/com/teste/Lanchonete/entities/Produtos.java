@@ -15,9 +15,8 @@ public class Produtos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idProdutoId;
+    Integer idProduto;
     String nomeProduto;
-
     Integer idFornecedor;
     Integer idCategoria;
 
@@ -26,15 +25,18 @@ public class Produtos {
 
     Double valor;
 
+
+
+
     /******************
      * RELACIONAMENTOS
      ******************/
 
     @ManyToOne
-    @JoinColumn(name = "idFornecedor", insertable = false, updatable = false)
+    @JoinColumn(name = "idFornecedor")
     private Fornecedores fornecedores;
 
     @ManyToOne
-    @JoinColumn(name = "idCategoria", insertable = false,updatable = false)
+    @JoinColumn(name = "idCategoria")
     private Categorias categorias;
 }

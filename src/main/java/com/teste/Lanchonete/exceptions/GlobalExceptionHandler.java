@@ -51,9 +51,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({ProdutoJaCadastradoExceptions.class})
-    public ResponseEntity<Object> handleProdutoJaCadastradoExceptions(ProdutoJaCadastradoExceptions ex) {
-        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler({ProdutoJaExisteException.class})
+    public ResponseEntity<Object> handleProdutoJaExisteException(ProdutoJaExisteException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
     }
 
 

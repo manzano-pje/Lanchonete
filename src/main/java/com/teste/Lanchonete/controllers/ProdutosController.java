@@ -22,12 +22,12 @@ public class ProdutosController {
 
     private final ProdutosService produtosService;
 
-//    @PostMapping
-//    public ResponseEntity<Object> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
-//        ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/produtos}").
-//                buildAndExpand(retorno.getNomeProduto()).toUri();
-//        return ResponseEntity.created(uri).body("Produto " +produtosDto.getNomeProduto() + " criado com sucesso!");
-//    }
+    @PostMapping
+    public ResponseEntity<Object> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
+        ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/produtos}").
+                buildAndExpand(retorno.getNome()).toUri();
+        return ResponseEntity.created(uri).body("Produto " + retorno.getNome() + " cadastrado com sucesso!");
+    }
 
 }

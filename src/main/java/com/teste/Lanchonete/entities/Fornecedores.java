@@ -76,11 +76,11 @@ public class Fornecedores {
             this.telefone = fornecedoresDto.getTelefone();
         }
     }
-//
-//    /*******************
-//     * RELACIONAMENTOS
-//     *******************/
-//
-//    @OneToMany(mappedBy = "fornecedores")
-//    private List<Produtos> produtosList;
+
+    /*******************
+     * RELACIONAMENTOS
+     *******************/
+
+    @OneToMany(mappedBy = "fornecedores")
+    private List<Produtos> produtosList;
 }
