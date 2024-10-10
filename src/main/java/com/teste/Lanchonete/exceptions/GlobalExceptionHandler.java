@@ -21,8 +21,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler({NaoExisteEmpresaException.class})
-    public ResponseEntity<Object> handleNaoExisteEmpresaExciption(NaoExisteEmpresaException ex) {
+    @ExceptionHandler({NaoExisteEmpresaExciption.class})
+    public ResponseEntity<Object> handleNaoExisteEmpresaExciption(NaoExisteEmpresaExciption ex) {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
