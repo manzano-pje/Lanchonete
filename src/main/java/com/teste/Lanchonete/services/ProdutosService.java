@@ -24,7 +24,7 @@ public class ProdutosService {
     private final VerificarFornecedor verificarFornecedor;
     private final VerificarCategoria verificarCategoria;
     private final ModelMapper mapper;
-
+  
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
 
         verificacaoCriaProdutos.verificar(produtosDto);
@@ -38,5 +38,6 @@ public class ProdutosService {
         return mapper.map(produtos, ProdutosDto.class);
     }
 
-
 }
+
+

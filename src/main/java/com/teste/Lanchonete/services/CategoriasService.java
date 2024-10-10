@@ -53,9 +53,9 @@ public class CategoriasService {
         }
     }
 
-    public CategoriasDto listarUmaCategoria(String nome){
+    public CategoriasDto listarUmaCategoria(Integer idCategorias){
         try{
-            Categorias categoriasOptional = categoriasRepository.findBynomeCategoria(nome).
+            Categorias categoriasOptional = categoriasRepository.findById(idCategorias).
                     orElseThrow(NaoExitemCategoriasException::new);
             return mapper.map(categoriasOptional, CategoriasDto.class);
         }catch (DataAccessException err){
@@ -63,21 +63,20 @@ public class CategoriasService {
         }
     }
 
-    public void atualizarCategoria(String nome, CategoriasDto categoriasDto){
+    public void atualizarCategoria(CategoriasDto categoriasDto){
         try{
-             Categorias categoria = categoriasRepository.findBynomeCategoria(nome).
+             Categorias categoria = categoriasRepository.findById(categoriasDto.getIdCategoria()).
                     orElseThrow(NaoExitemCategoriasException::new);
             categoria.atualizar(categoriasDto);
             categoriasRepository.save(categoria);
-
         }catch (DataAccessException err){
             throw new ErroDoServidorException();
         }
     }
 
-    public void excluirCategoria(String nome){
+    public void excluirCategoria(Integer idCategorias){
         try{
-            Categorias categoriasOptional = categoriasRepository.findBynomeCategoria(nome).
+            Categorias categoriasOptional = categoriasRepository.findById(idCategorias).
                 orElseThrow(NaoExitemCategoriasException::new);
             categoriasRepository.delete(categoriasOptional);
         }catch (DataAccessException err){
