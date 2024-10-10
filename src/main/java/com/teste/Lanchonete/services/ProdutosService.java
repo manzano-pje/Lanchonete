@@ -4,6 +4,9 @@ import com.teste.Lanchonete.dtos.ProdutosDto;
 import com.teste.Lanchonete.entities.Categorias;
 import com.teste.Lanchonete.entities.Fornecedores;
 import com.teste.Lanchonete.entities.Produtos;
+import com.teste.Lanchonete.interfaces.VerificacaoCriaProdutos;
+import com.teste.Lanchonete.interfaces.VerificarCategoria;
+import com.teste.Lanchonete.interfaces.VerificarFornecedor;
 import com.teste.Lanchonete.repositories.CategoriasRepository;
 import com.teste.Lanchonete.repositories.FornecedoresRepository;
 import com.teste.Lanchonete.repositories.ProdutosRepository;
@@ -28,7 +31,7 @@ public class ProdutosService {
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
 
         verificacaoCriaProdutos.verificar(produtosDto);
-        Categorias categorias = verificarCategoria.verificar(produtosDto);
+        Categorias categorias = verificarCategoria.existeCategoria(produtosDto);
         Fornecedores fornecedores = verificarFornecedor.verificar(produtosDto);
         Produtos produtos = mapper.map(produtosDto, Produtos.class);
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/categorias")
+@RequestMapping({"/v1/categorias"})
 public class CategoriasController {
 
     private final CategoriasService categoriaService;
@@ -41,9 +41,9 @@ public class CategoriasController {
         return ResponseEntity.ok().body(retorno);
     }
 
-    @PatchMapping("/alterar/")
-    public ResponseEntity<Object> atualizarCategoria(@RequestBody @Valid CategoriasDto categoriasDto){
-        categoriaService.atualizarCategoria(categoriasDto);
+    @PatchMapping("/alterar/{id}")
+    public ResponseEntity<Object> atualizarCategoria(@PathVariable Integer id, @RequestBody @Valid CategoriasDto categoriasDto){
+        categoriaService.atualizarCategoria(id, categoriasDto);
         return ResponseEntity.ok("Categoria atualizada com sucesso!");
     }
 

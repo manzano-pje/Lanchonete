@@ -25,14 +25,9 @@ public class EmpresaController {
 
     private EmpresaService empresaService;
 
-    @Autowired
-    public EmpresaController(EmpresaService empresaService) {
-        this.empresaService = empresaService;
-    }
-
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody EmpresaDto empresaDto) {
-        EmpresaDto empresa = empresaService.criar(empresaDto);
+        EmpresaDto empresa = empresaService.criarEmpresa(empresaDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cnpj}").
                 buildAndExpand(empresa.getCnpj()).toUri();
         return ResponseEntity.created(uri).body("Empresa criada!");
@@ -40,7 +35,7 @@ public class EmpresaController {
 
     @GetMapping({"/listarTodos"})
     public ResponseEntity<List<EmpresaDto>> listarTudo() {
-        List<EmpresaDto> lista = empresaService.listar();
+        List<EmpresaDto> lista = empresaService.listarEmpresa();
         return ResponseEntity.ok().body(lista);
     }
 

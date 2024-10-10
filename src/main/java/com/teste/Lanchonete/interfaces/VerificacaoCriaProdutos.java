@@ -1,4 +1,4 @@
-package com.teste.Lanchonete.services;
+package com.teste.Lanchonete.interfaces;
 
 import com.teste.Lanchonete.dtos.ProdutosDto;
 

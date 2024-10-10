@@ -2,9 +2,9 @@ package com.teste.Lanchonete.services;
 
 import com.teste.Lanchonete.dtos.CategoriasDto;
 import com.teste.Lanchonete.entities.Categorias;
-import com.teste.Lanchonete.exceptions.CategoriaJaExisteException;
 import com.teste.Lanchonete.exceptions.ErroDoServidorException;
 import com.teste.Lanchonete.exceptions.NaoExitemCategoriasException;
+import com.teste.Lanchonete.interfaces.VerificarCategoria;
 import com.teste.Lanchonete.repositories.CategoriasRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,7 +12,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,20 +20,14 @@ public class CategoriasService {
 
     private final CategoriasRepository categoriasRepository;
     private final ModelMapper mapper;
+    private final VerificarCategoria verificarCategoria;
 
     public CategoriasDto criarCategorias(CategoriasDto categoriasDto) {
-        try {
-            Optional<Categorias> categoriasOptional = categoriasRepository.
-                    findBynomeCategoria(categoriasDto.getNomeCategoria());
-            if (categoriasOptional.isPresent()) {
-                throw new CategoriaJaExisteException();
-            }
-            Categorias categoria = mapper.map(categoriasDto, Categorias.class);
-            categoriasRepository.save(categoria);
-            return mapper.map(categoria, CategoriasDto.class);
-        } catch (DataAccessException err) {
-            throw new ErroDoServidorException();
-        }
+
+        verificarCategoria.existeCategoria(categoriasDto);
+        Categorias categoria = mapper.map(categoriasDto, Categorias.class);
+        categoriasRepository.save(categoria);
+        return mapper.map(categoria, CategoriasDto.class);
     }
 
     public List<CategoriasDto> listarCategorias() {
@@ -54,33 +47,19 @@ public class CategoriasService {
     }
 
     public CategoriasDto listarUmaCategoria(Integer idCategorias){
-        try{
-            Categorias categoriasOptional = categoriasRepository.findById(idCategorias).
-                    orElseThrow(NaoExitemCategoriasException::new);
-            return mapper.map(categoriasOptional, CategoriasDto.class);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+       Categorias categorias = verificarCategoria.verificaLista(idCategorias);
+       return mapper.map(categorias, CategoriasDto.class);
     }
 
-    public void atualizarCategoria(CategoriasDto categoriasDto){
-        try{
-             Categorias categoria = categoriasRepository.findById(categoriasDto.getIdCategoria()).
-                    orElseThrow(NaoExitemCategoriasException::new);
-            categoria.atualizar(categoriasDto);
-            categoriasRepository.save(categoria);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+    public void atualizarCategoria(Integer id, CategoriasDto categoriasDto){
+
+        Categorias categoria = verificarCategoria.verificaLista(id);
+        categoria.atualizar(categoriasDto);
+        categoriasRepository.save(categoria);
     }
 
     public void excluirCategoria(Integer idCategorias){
-        try{
-            Categorias categoriasOptional = categoriasRepository.findById(idCategorias).
-                orElseThrow(NaoExitemCategoriasException::new);
-            categoriasRepository.delete(categoriasOptional);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+        Categorias categoria = verificarCategoria.verificaLista(idCategorias);
+        categoriasRepository.delete(categoria);
     }
 }
