@@ -7,7 +7,6 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Table(name = "tb_produtos")
@@ -17,26 +16,20 @@ public class Produtos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idProduto;
     String nomeProduto;
-    Integer idFornecedor;
-    Integer idCategoria;
-
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
 
     Double valor;
 
-
-
-
     /******************
      * RELACIONAMENTOS
      ******************/
 
-    @ManyToOne
-    @JoinColumn(name = "idFornecedor", insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idFornecedor")
     private Fornecedores fornecedores;
 
-    @ManyToOne
-    @JoinColumn(name = "idCategoria", insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idCategoria")
     private Categorias categorias;
 }
