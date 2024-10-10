@@ -1,6 +1,8 @@
 package com.teste.Lanchonete.services;
 
 import com.teste.Lanchonete.dtos.ProdutosDto;
+import com.teste.Lanchonete.entities.Categorias;
+import com.teste.Lanchonete.entities.Fornecedores;
 import com.teste.Lanchonete.entities.Produtos;
 import com.teste.Lanchonete.exceptions.NaoExistemFornecedoresException;
 import com.teste.Lanchonete.exceptions.NaoExitemCategoriasException;
@@ -11,7 +13,6 @@ import com.teste.Lanchonete.repositories.ProdutosRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,23 +28,27 @@ public class ProdutosService {
     private final ModelMapper mapper;
   
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
-        Optional<Produtos> produtos = produtosRepository.findById(produtosDto.getIdProduto());
-        if(produtos.isPresent()){
+        Optional<Produtos> produtosOptional = produtosRepository.findById(produtosDto.getIdProduto());
+        if(produtosOptional.isPresent()){
             throw new ProdutoJaExisteException();
         }
         /* verifica a existência da categoria */
-        Boolean categoria = categoriasRepository.findByCategoria(produtosDto.getCategoria());
-        if(!categoria){
+        Optional<Categorias> categoria = categoriasRepository.findById(produtosDto.getIdCategoria());
+        if(categoria.isEmpty()){
             throw new NaoExitemCategoriasException();
         }
 
         /* verficia a existência do fornecedor */
-        Boolean fornecedor = fornecedoresRepository.findByFornecedor(produtosDto.getFornecedor());
-        if(!fornecedor){
+        Optional<Fornecedores> fornecedor = fornecedoresRepository.findById(produtosDto.getIdFornecedor());
+        if(fornecedor.isEmpty()){
             throw new NaoExistemFornecedoresException();
         }
 
+        produtosDto.setIdCategoria(categoria.get().getIdCategoria());
+        produtosDto.setIdFornecedor(fornecedor.get().getIdFornecedor());
+        Produtos produtos = mapper.map(produtosDto, Produtos.class);
 
-        return null;
+        produtosRepository.save(produtos);
+        return mapper.map(produtos, ProdutosDto.class);
     }
 }

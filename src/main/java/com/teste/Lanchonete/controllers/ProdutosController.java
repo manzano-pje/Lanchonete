@@ -26,8 +26,8 @@ public class ProdutosController {
     public ResponseEntity<Object> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
         ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/produtos}").
-                buildAndExpand(retorno.getNome()).toUri();
-        return ResponseEntity.created(uri).body("Produto " + retorno.getNome() + " cadastrado com sucesso!");
+                buildAndExpand(retorno.getNomeProduto()).toUri();
+        return ResponseEntity.created(uri).body("Produto " + retorno.getNomeProduto() + " cadastrado com sucesso!");
     }
 
 }

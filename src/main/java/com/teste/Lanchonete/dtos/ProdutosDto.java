@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 public class ProdutosDto {
 
     Integer idProduto;
-    String nome;
-    Integer fornecedor;
-    Integer categoria;
+    String nomeProduto;
+    Integer idFornecedor;
+    Integer idCategoria;
     private UnidadeMedida unidadeMedida;
     Double valor;
 
     public ProdutosDto(Produtos produtos, Fornecedores fornecedores, Categorias categorias, UnidadeMedida unidadeMedida) {
         this.idProduto = produtos.getIdProduto();
-        this.nome = produtos.getNome();
-        this.fornecedor = fornecedores.getIdFornecedor();
-        this.categoria = categorias.getIdCategoria();
+        this.nomeProduto = produtos.getNomeProduto();
+        this.idFornecedor = fornecedores.getIdFornecedor();
+        this.idCategoria = categorias.getIdCategoria();
         this.unidadeMedida = unidadeMedida;
         this.valor = produtos.getValor();
     }
