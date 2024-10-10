@@ -4,9 +4,10 @@ import com.teste.Lanchonete.dtos.EmpresaDto;
 import com.teste.Lanchonete.entities.Empresa;
 import com.teste.Lanchonete.exceptions.EmpresaJaExisteException;
 import com.teste.Lanchonete.exceptions.ErroDoServidorException;
-import com.teste.Lanchonete.exceptions.NaoExisteEmpresaException;
+import com.teste.Lanchonete.exceptions.NaoExisteEmpresaExciption;
 import com.teste.Lanchonete.repositories.EmpresaRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
