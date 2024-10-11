@@ -24,7 +24,7 @@ public class CategoriasService {
 
     public CategoriasDto criarCategorias(CategoriasDto categoriasDto) {
 
-        verificarCategoria.existeCategoria(categoriasDto);
+        verificarCategoria.validarCategoriaExistente(categoriasDto);
         Categorias categoria = mapper.map(categoriasDto, Categorias.class);
         categoriasRepository.save(categoria);
         return mapper.map(categoria, CategoriasDto.class);
@@ -47,19 +47,19 @@ public class CategoriasService {
     }
 
     public CategoriasDto listarUmaCategoria(Integer idCategorias){
-       Categorias categorias = verificarCategoria.verificaLista(idCategorias);
+       Categorias categorias = verificarCategoria.buscarCategoriaPorId(idCategorias);
        return mapper.map(categorias, CategoriasDto.class);
     }
 
     public void atualizarCategoria(Integer id, CategoriasDto categoriasDto){
 
-        Categorias categoria = verificarCategoria.verificaLista(id);
+        Categorias categoria = verificarCategoria.buscarCategoriaPorId(id);
         categoria.atualizar(categoriasDto);
         categoriasRepository.save(categoria);
     }
 
     public void excluirCategoria(Integer idCategorias){
-        Categorias categoria = verificarCategoria.verificaLista(idCategorias);
+        Categorias categoria = verificarCategoria.buscarCategoriaPorId(idCategorias);
         categoriasRepository.delete(categoria);
     }
 }

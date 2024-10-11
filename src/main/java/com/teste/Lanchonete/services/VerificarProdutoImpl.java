@@ -3,7 +3,7 @@ package com.teste.Lanchonete.services;
 import com.teste.Lanchonete.dtos.ProdutosDto;
 import com.teste.Lanchonete.entities.Produtos;
 import com.teste.Lanchonete.exceptions.ProdutoJaExisteException;
-import com.teste.Lanchonete.interfaces.VerificacaoCriaProdutos;
+import com.teste.Lanchonete.interfaces.VerificacarProdutos;
 import com.teste.Lanchonete.repositories.ProdutosRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class VerificarProdutoExistente implements VerificacaoCriaProdutos {
+public class VerificarProdutoImpl implements VerificacarProdutos {
 
     private final ProdutosRepository produtosRepository;
 
