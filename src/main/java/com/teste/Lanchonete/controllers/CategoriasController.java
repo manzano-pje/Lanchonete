@@ -6,6 +6,7 @@ import com.teste.Lanchonete.repositories.CategoriasRepository;
 import com.teste.Lanchonete.services.CategoriasService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,9 +25,7 @@ public class CategoriasController {
     @PostMapping
     public ResponseEntity<Object> criarCategoria(@RequestBody @Valid CategoriasDto categoriasDto){
         CategoriasDto retorno = categoriaService.criarCategorias(categoriasDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/categoria}").
-                buildAndExpand(retorno.getNomeCategoria()).toUri();
-        return ResponseEntity.created(uri).body("Categoria criada com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Categoria criada com sucesso!");
     }
 
     @GetMapping
