@@ -31,7 +31,7 @@ public class ProdutosService {
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
 
         verificacaoCriaProdutos.verificar(produtosDto);
-        Categorias categorias = verificarCategoria.existeCategoria(produtosDto);
+        Categorias categorias = verificarCategoria.buscarCategoriaPorId(produtosDto.getIdCategoria());
         Fornecedores fornecedores = verificarFornecedor.verificar(produtosDto);
         Produtos produtos = mapper.map(produtosDto, Produtos.class);
 
