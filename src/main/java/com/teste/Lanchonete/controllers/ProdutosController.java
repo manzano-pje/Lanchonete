@@ -5,14 +5,10 @@ import com.teste.Lanchonete.services.ProdutosService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @Data
 @RestController
@@ -24,10 +20,14 @@ public class ProdutosController {
 
     @PostMapping
     public ResponseEntity<Object> criarProdutos(@RequestBody @Valid ProdutosDto produtosDto){
-        ProdutosDto retorno = produtosService.criarProdutos(produtosDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/produtos}").
-                buildAndExpand(retorno.getNomeProduto()).toUri();
-        return ResponseEntity.created(uri).body("Produto " + retorno.getNomeProduto() + " cadastrado com sucesso!");
+        produtosService.criarProdutos(produtosDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso!");
     }
 
+    @GetMapping
+    public List<ProdutosDto> listarTodosProdutos(){
+        List<ProdutosDto> listaProdutosDto = produtosService.listarTodosProdutos();
+        return listaProdutosDto;
+
+    }
 }

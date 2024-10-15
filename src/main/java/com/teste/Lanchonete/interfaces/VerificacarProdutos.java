@@ -1,7 +1,10 @@
 package com.teste.Lanchonete.interfaces;
 
-import com.teste.Lanchonete.dtos.ProdutosDto;
+import com.teste.Lanchonete.entities.Produtos;
+
+import java.util.List;
 
 public interface VerificacarProdutos {
-    void verificar(ProdutosDto produtosDto);
+    void verificarProdutoPorNome(String produto);
+    List<Produtos> listarTodosProdutos();
 }

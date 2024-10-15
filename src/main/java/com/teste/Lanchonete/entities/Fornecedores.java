@@ -32,9 +32,9 @@ public class Fornecedores {
 
     public void atualizar(FornecedoresDto fornecedoresDto){
 
-//        if(fornecedoresDto.getIdFornecedor() !=null){
-//            this.idFornecedor = fornecedoresDto.getIdFornecedor();
-//        }
+        if(fornecedoresDto.getIdFornecedor() !=null){
+            this.idFornecedor = fornecedoresDto.getIdFornecedor();
+        }
 
         if(fornecedoresDto.getNome() !=null){
             this.nome = fornecedoresDto.getNome();

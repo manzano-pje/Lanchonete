@@ -15,6 +15,9 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @AllArgsConstructor
 @Service
@@ -30,8 +33,8 @@ public class ProdutosService {
   
     public ProdutosDto criarProdutos(ProdutosDto produtosDto){
 
-        verificacarProdutos.verificar(produtosDto);
-        Categorias categorias = verificarCategorias.buscarCategoriaPorId(produtosDto.getIdCategoria());
+        verificacarProdutos.verificarProdutoPorNome(produtosDto.getProduto());
+        Categorias categorias = verificarCategorias.buscarCategoriaPorId(produtosDto.getCategoria());
         Fornecedores fornecedores = verificarFornecedor.verificar(produtosDto);
         Produtos produtos = mapper.map(produtosDto, Produtos.class);
 
@@ -41,6 +44,14 @@ public class ProdutosService {
         return mapper.map(produtos, ProdutosDto.class);
     }
 
+
+
+    public List<ProdutosDto> listarTodosProdutos(){
+        return verificacarProdutos.listarTodosProdutos().
+                stream().
+                map(ProdutosDto::new).
+                collect(Collectors.toList());
+    }
 }
 
 
