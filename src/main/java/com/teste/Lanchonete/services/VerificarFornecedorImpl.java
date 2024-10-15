@@ -1,6 +1,5 @@
 package com.teste.Lanchonete.services;
 
-import com.teste.Lanchonete.dtos.ProdutosDto;
 import com.teste.Lanchonete.entities.Fornecedores;
 import com.teste.Lanchonete.exceptions.NaoExistemFornecedoresException;
 import com.teste.Lanchonete.interfaces.VerificarFornecedor;

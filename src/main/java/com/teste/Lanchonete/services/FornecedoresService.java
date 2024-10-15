@@ -3,18 +3,14 @@ package com.teste.Lanchonete.services;
 import com.teste.Lanchonete.configuracoes.FormatarTexto;
 import com.teste.Lanchonete.dtos.FornecedoresDto;
 import com.teste.Lanchonete.entities.Fornecedores;
-import com.teste.Lanchonete.exceptions.*;
 import com.teste.Lanchonete.interfaces.VerificarFornecedor;
 import com.teste.Lanchonete.repositories.FornecedoresRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +42,8 @@ public class FornecedoresService {
             return mapper.map(fornecedor,FornecedoresDto.class);
     }
 
-    public void alterarFornecedor(FornecedoresDto fornecedorDto){
-        Fornecedores dadosFornecedor = verificarFornecedor.verificarFornecedorPorId(fornecedorDto.getIdFornecedor());
+    public void alterarFornecedor(Integer id, FornecedoresDto fornecedorDto){
+        Fornecedores dadosFornecedor = verificarFornecedor.verificarFornecedorPorId(id);
         dadosFornecedor.atualizar(fornecedorDto);
         fornecedoresRepository.save(dadosFornecedor);
     }
