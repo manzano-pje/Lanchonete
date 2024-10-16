@@ -34,7 +34,7 @@ public class FornecedoresController {
         return ResponseEntity.ok(fornecedorDto);
     }
 
-    @PatchMapping("/{id}}`")
+    @PatchMapping("/{id}`")
     public ResponseEntity<Object> AlterarFornecedor(@PathVariable Integer id, @RequestBody @Valid FornecedoresDto fornecedoresDto){
         fornecedoresService.alterarFornecedor(id, fornecedoresDto);
         return ResponseEntity.ok("Atualização do " + fornecedoresDto.getNome() + "efetuada com sucesso!");
