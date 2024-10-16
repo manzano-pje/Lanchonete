@@ -1,9 +1,9 @@
 package com.teste.Lanchonete.services;
 
-import com.teste.Lanchonete.dtos.ProdutosDto;
 import com.teste.Lanchonete.entities.Produtos;
 import com.teste.Lanchonete.exceptions.NaoExistemProdutosCadastradosException;
 import com.teste.Lanchonete.exceptions.ProdutoJaExisteException;
+import com.teste.Lanchonete.exceptions.ProdutoNaoCadastradoException;
 import com.teste.Lanchonete.interfaces.VerificacarProdutos;
 import com.teste.Lanchonete.repositories.ProdutosRepository;
 import lombok.AllArgsConstructor;
@@ -34,4 +34,13 @@ public class VerificarProdutoImpl implements VerificacarProdutos {
         }
         return listaProdutos;
     }
+
+    @Override
+    public Produtos listarProdutoPorId(Integer id) {
+        return produtosRepository.findById(id).
+                orElseThrow(ProdutoNaoCadastradoException::new);
+    }
+
+
+
 }

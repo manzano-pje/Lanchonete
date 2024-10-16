@@ -7,4 +7,5 @@ import java.util.List;
 public interface VerificacarProdutos {
     void verificarProdutoPorNome(String produto);
     List<Produtos> listarTodosProdutos();
+    Produtos listarProdutoPorId(Integer id);
 }

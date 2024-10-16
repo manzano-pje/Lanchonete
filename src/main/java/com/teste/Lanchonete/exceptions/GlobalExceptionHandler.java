@@ -61,6 +61,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({ProdutoNaoCadastradoException.class})
+    public ResponseEntity<Object> handleProdutoNaoCadastradoException(ProdutoNaoCadastradoException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
+    }
 
 
 

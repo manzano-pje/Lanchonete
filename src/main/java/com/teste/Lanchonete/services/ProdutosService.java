@@ -44,13 +44,15 @@ public class ProdutosService {
         return mapper.map(produtos, ProdutosDto.class);
     }
 
-
-
     public List<ProdutosDto> listarTodosProdutos(){
         return verificacarProdutos.listarTodosProdutos().
                 stream().
                 map(ProdutosDto::new).
                 collect(Collectors.toList());
+    }
+
+    public ProdutosDto listarUmProduto(Integer id){
+            return mapper.map(verificacarProdutos.listarProdutoPorId(id),ProdutosDto.class);
     }
 }
 

@@ -30,4 +30,9 @@ public class ProdutosController {
         return listaProdutosDto;
 
     }
+
+    @GetMapping("/{id}")
+    public ProdutosDto listarUmProduto(@PathVariable Integer id){
+        return produtosService.listarUmProduto(id);
+    }
 }
