@@ -3,17 +3,14 @@ package com.teste.Lanchonete.services;
 import com.teste.Lanchonete.configuracoes.FormatarTexto;
 import com.teste.Lanchonete.dtos.FornecedoresDto;
 import com.teste.Lanchonete.entities.Fornecedores;
-import com.teste.Lanchonete.exceptions.*;
+import com.teste.Lanchonete.interfaces.VerificarFornecedor;
 import com.teste.Lanchonete.repositories.FornecedoresRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,68 +21,35 @@ public class FornecedoresService {
     private final FornecedoresRepository fornecedoresRepository;
     private final ModelMapper mapper;
     private final FormatarTexto formatarTexto;
+    private final VerificarFornecedor verificarFornecedor;
 
     public FornecedoresDto criarFornecedores(FornecedoresDto fornecedoresDto){
-        try{
-            //String fornecedorFormatado = FormatarTexto.formatarTexto(fornecedoresDto.getNome());
-            Optional<Fornecedores> fornecedoresOptional = fornecedoresRepository.findByCnpj(fornecedoresDto.getCnpj());
-            if(fornecedoresOptional.isPresent()){
-                throw new FornecedorJaExisteException();
-            }
-            //fornecedoresDto.setNome(fornecedorFormatado);
-            Fornecedores fornecedores = mapper.map(fornecedoresDto, Fornecedores.class);
-            fornecedoresRepository.save(fornecedores);
-            return mapper.map(fornecedores, FornecedoresDto.class);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+       verificarFornecedor.verificarFornecedorPorId(fornecedoresDto.getIdFornecedor());
+       Fornecedores fornecedor = mapper.map(fornecedoresDto, Fornecedores.class);
+       fornecedoresRepository.save(fornecedor);
+       return mapper.map(fornecedor, FornecedoresDto.class);
     }
 
     public List<FornecedoresDto> listarTodosFornecedores(){
-        try{
-            List<Fornecedores> fornecedoresList = fornecedoresRepository.findAll();
-            if(fornecedoresList.isEmpty()){
-                throw new NaoExistemFornecedoresException();
-            }
-            return fornecedoresList.
+            return verificarFornecedor.buscarTodosFornecedores().
                     stream().
                     map(FornecedoresDto::new).
                     collect(Collectors.toList());
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
     }
 
-    public FornecedoresDto listarUmFornecedor(Integer iDFornecedor){
-        try{
-            Fornecedores fornecedores = fornecedoresRepository.findById(iDFornecedor).
-                    orElseThrow(NaoExistemFornecedoresException::new);
-            return mapper.map(fornecedores,FornecedoresDto.class);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+    public FornecedoresDto listarUmFornecedor(Integer id){
+            Fornecedores fornecedor = verificarFornecedor.verificarFornecedorPorId(id);
+            return mapper.map(fornecedor,FornecedoresDto.class);
     }
 
-    public void alterarFornecedor(FornecedoresDto fornecedorDto){
-        try {
-            Fornecedores dadosFornecedor = fornecedoresRepository.findById(fornecedorDto.getIdFornecedor()).
-                    orElseThrow(NaoExistemFornecedoresException::new);
-
-           dadosFornecedor.atualizar(fornecedorDto);
-            fornecedoresRepository.save(dadosFornecedor);
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+    public void alterarFornecedor(Integer id, FornecedoresDto fornecedorDto){
+        Fornecedores dadosFornecedor = verificarFornecedor.verificarFornecedorPorId(id);
+        dadosFornecedor.atualizar(fornecedorDto);
+        fornecedoresRepository.save(dadosFornecedor);
     }
 
-    public void excluirFornecedor(Integer idFornecedor){
-        try {
-            Fornecedores fornecedores = fornecedoresRepository.findById(idFornecedor).
-                    orElseThrow(NaoExistemFornecedoresException::new);
-
-            fornecedoresRepository.deleteById(fornecedores.getIdFornecedor());
-        }catch (DataAccessException err){
-            throw new ErroDoServidorException();
-        }
+    public void excluirFornecedor(Integer id){
+        verificarFornecedor.verificarFornecedorPorId(id);
+        fornecedoresRepository.deleteById(id);
     }
 }
