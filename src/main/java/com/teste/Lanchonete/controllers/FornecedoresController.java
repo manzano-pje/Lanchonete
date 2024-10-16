@@ -4,11 +4,9 @@ import com.teste.Lanchonete.dtos.FornecedoresDto;
 import com.teste.Lanchonete.services.FornecedoresService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,10 +19,7 @@ public class FornecedoresController {
     @PostMapping
     public ResponseEntity<Object> criarFornecedores(@RequestBody @Valid FornecedoresDto fornecedoresDto) {
         FornecedoresDto fornecedores = fornecedoresService.criarFornecedores(fornecedoresDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/cnpj}").
-                buildAndExpand(fornecedores.getCnpj()).toUri();
-        String retorno = "Fornecedor " + fornecedoresDto.getNome() + " cadastrado com sucesso!";
-        return ResponseEntity.created(uri).body(retorno);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Fornecedor "+ fornecedoresDto.getNome() + " cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -33,15 +28,15 @@ public class FornecedoresController {
         return ResponseEntity.ok().body(fornecedores);
     }
 
-    @GetMapping("/fornecedor/{idFornecedor}")
-    public ResponseEntity<FornecedoresDto> listarUmFornecedor(@PathVariable @Valid Integer idFornecedor){
-        FornecedoresDto fornecedorDto = fornecedoresService.listarUmFornecedor(idFornecedor);
+    @GetMapping("{id}")
+    public ResponseEntity<FornecedoresDto> listarUmFornecedor(@PathVariable @Valid Integer id){
+        FornecedoresDto fornecedorDto = fornecedoresService.listarUmFornecedor(id);
         return ResponseEntity.ok(fornecedorDto);
     }
 
-    @PatchMapping("/atualizarFornecedor")
-    public ResponseEntity<Object> AlterarFornecedor(@RequestBody @Valid FornecedoresDto fornecedoresDto){
-        fornecedoresService.alterarFornecedor(fornecedoresDto);
+    @PatchMapping("/{id}`")
+    public ResponseEntity<Object> AlterarFornecedor(@PathVariable Integer id, @RequestBody @Valid FornecedoresDto fornecedoresDto){
+        fornecedoresService.alterarFornecedor(id, fornecedoresDto);
         return ResponseEntity.ok("Atualização do " + fornecedoresDto.getNome() + "efetuada com sucesso!");
     }
 

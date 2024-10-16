@@ -35,7 +35,7 @@ public class ProdutosService {
 
         verificacarProdutos.verificarProdutoPorNome(produtosDto.getProduto());
         Categorias categorias = verificarCategorias.buscarCategoriaPorId(produtosDto.getCategoria());
-        Fornecedores fornecedores = verificarFornecedor.verificar(produtosDto);
+        Fornecedores fornecedores = verificarFornecedor.verificarFornecedorPorId(produtosDto.getFornecedor());
         Produtos produtos = mapper.map(produtosDto, Produtos.class);
 
         produtos.setCategorias(categorias);
