@@ -1,11 +1,12 @@
-package com.teste.Lanchonete.services;
+package com.teste.Lanchonete.implementacoes;
 
-import com.teste.Lanchonete.entities.Produtos;
+import com.teste.Lanchonete.dtos.ProdutoDto;
+import com.teste.Lanchonete.entities.Produto;
 import com.teste.Lanchonete.exceptions.NaoExistemProdutosCadastradosException;
 import com.teste.Lanchonete.exceptions.ProdutoJaExisteException;
 import com.teste.Lanchonete.exceptions.ProdutoNaoCadastradoException;
-import com.teste.Lanchonete.interfaces.VerificacarProdutos;
-import com.teste.Lanchonete.repositories.ProdutosRepository;
+import com.teste.Lanchonete.interfaces.VerificacarProduto;
+import com.teste.Lanchonete.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +15,21 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class VerificarProdutoImpl implements VerificacarProdutos {
+public class VerificarProdutoImpl implements VerificacarProduto {
 
-    private final ProdutosRepository produtosRepository;
+    private final ProdutoRepository produtoRepository;
 
     @Override
     public void verificarProdutoPorNome(String produto) {
-        Optional<Produtos> produtosOptional = produtosRepository.findByProduto(produto);
+        Optional<Produto> produtosOptional = produtoRepository.findByProduto(produto);
         if(produtosOptional.isPresent()){
             throw new ProdutoJaExisteException();
         }
     }
 
     @Override
-    public List<Produtos> listarTodosProdutos(){
-        List<Produtos> listaProdutos = produtosRepository.findAll();
+    public List<Produto> listarTodosProdutos(){
+        List<Produto> listaProdutos = produtoRepository.findAll();
         if(listaProdutos.isEmpty()){
             throw new NaoExistemProdutosCadastradosException();
         }
@@ -36,11 +37,9 @@ public class VerificarProdutoImpl implements VerificacarProdutos {
     }
 
     @Override
-    public Produtos listarProdutoPorId(Integer id) {
-        return produtosRepository.findById(id).
+    public ProdutoDto listarProdutoPorId(Integer id) {
+        Produto produto = produtoRepository.findById(id).
                 orElseThrow(ProdutoNaoCadastradoException::new);
+        return new ProdutoDto();
     }
-
-
-
 }

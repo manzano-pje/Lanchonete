@@ -1,9 +1,10 @@
 package com.teste.Lanchonete.interfaces;
 
-import com.teste.Lanchonete.entities.Fornecedores;
+import com.teste.Lanchonete.entities.Fornecedor;
+
 import java.util.List;
 
 public interface VerificarFornecedor {
-    Fornecedores verificarFornecedorPorId(Integer id);
-    List<Fornecedores> buscarTodosFornecedores();
+    Fornecedor verificarFornecedorPorId(Integer id);
+    List<Fornecedor> buscarTodosFornecedores();
 }

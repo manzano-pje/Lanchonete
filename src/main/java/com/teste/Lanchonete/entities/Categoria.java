@@ -1,6 +1,6 @@
 package com.teste.Lanchonete.entities;
 
-import com.teste.Lanchonete.dtos.CategoriasDto;
+import com.teste.Lanchonete.dtos.CategoriaDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,16 +11,16 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "tb_categoria")
-public class Categorias {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer idCategoria;
     String nomeCategoria;
 
-    public void atualizar(CategoriasDto categoriasDto) {
-        if (categoriasDto.getNomeCategoria() != null) {
-            this.nomeCategoria = categoriasDto.getNomeCategoria();
+    public void atualizar(CategoriaDto categoriaDto) {
+        if (categoriaDto.getNomeCategoria() != null) {
+            this.nomeCategoria = categoriaDto.getNomeCategoria();
         }
     }
 
@@ -28,7 +28,7 @@ public class Categorias {
      * RELACIONAMENTOS
      *********************/
 
-    @OneToMany(mappedBy = "categorias")
-    private List<Produtos> produtosList;
+    @OneToMany(mappedBy = "categoria")
+    private List<Produto> produtoList;
 
 }

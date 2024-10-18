@@ -1,6 +1,6 @@
 package com.teste.Lanchonete.dtos;
 
-import com.teste.Lanchonete.entities.Fornecedores;
+import com.teste.Lanchonete.entities.Fornecedor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FornecedoresDto {
+public class FornecedorDto {
     Integer idFornecedor;
     @NonNull
     String nome;
@@ -45,20 +45,20 @@ public class FornecedoresDto {
     @Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
     String telefone;
 
-    public FornecedoresDto(Fornecedores fornecedores) {
-        this.idFornecedor = fornecedores.getIdFornecedor();
-        this.nome = fornecedores.getNome();
-        this.cnpj = fornecedores.getCnpj();
-        this.inscMunicipal = fornecedores.getInscMunicipal();
-        this.inscEstadual = fornecedores.getInscEstadual();
-        this.endereco = fornecedores.getEndereco();
-        this.numero = fornecedores.getNumero();
-        this.complemento = fornecedores.getComplemento();
-        this.bairro = fornecedores.getBairro();
-        this.cidade = fornecedores.getCidade();
-        this.uf = fornecedores.getUf();
-        this.cep = fornecedores.getCep();
-        this.email = fornecedores.getEmail();
-        this.telefone = fornecedores.getTelefone();
+    public FornecedorDto(Fornecedor fornecedor) {
+        this.idFornecedor = fornecedor.getIdFornecedor();
+        this.nome = fornecedor.getNome();
+        this.cnpj = fornecedor.getCnpj();
+        this.inscMunicipal = fornecedor.getInscMunicipal();
+        this.inscEstadual = fornecedor.getInscEstadual();
+        this.endereco = fornecedor.getEndereco();
+        this.numero = fornecedor.getNumero();
+        this.complemento = fornecedor.getComplemento();
+        this.bairro = fornecedor.getBairro();
+        this.cidade = fornecedor.getCidade();
+        this.uf = fornecedor.getUf();
+        this.cep = fornecedor.getCep();
+        this.email = fornecedor.getEmail();
+        this.telefone = fornecedor.getTelefone();
     }
 }

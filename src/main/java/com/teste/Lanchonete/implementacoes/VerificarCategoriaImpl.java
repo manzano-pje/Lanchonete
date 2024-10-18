@@ -1,10 +1,10 @@
-package com.teste.Lanchonete.services;
+package com.teste.Lanchonete.implementacoes;
 
-import com.teste.Lanchonete.entities.Categorias;
+import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.exceptions.CategoriaJaExisteException;
 import com.teste.Lanchonete.exceptions.NaoExitemCategoriasException;
-import com.teste.Lanchonete.interfaces.VerificarCategorias;
-import com.teste.Lanchonete.repositories.CategoriasRepository;
+import com.teste.Lanchonete.interfaces.VerificarCategoria;
+import com.teste.Lanchonete.repositories.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
  */
 @AllArgsConstructor
 @Service
-public class VerificarCategoriasImpl implements VerificarCategorias {
+public class VerificarCategoriaImpl implements VerificarCategoria {
 
-    private final CategoriasRepository categoriasRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Override
     public void buscarCategoriaPorNome(String nome) {
-        categoriasRepository.findBynomeCategoria(nome).
+        categoriaRepository.findBynomeCategoria(nome).
                 ifPresent(categoria -> {
                     throw new  CategoriaJaExisteException();
                 });
     }
 
     @Override
-    public Categorias buscarCategoriaPorId(Integer idCategoria) {
-        return categoriasRepository.findById(idCategoria).
+    public Categoria buscarCategoriaPorId(Integer idCategoria) {
+        return categoriaRepository.findById(idCategoria).
                 orElseThrow(NaoExitemCategoriasException::new);
     }
 
