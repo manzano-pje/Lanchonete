@@ -1,11 +1,13 @@
 package com.teste.Lanchonete.repositories;
 
-import com.teste.Lanchonete.entities.Produtos;
+import com.teste.Lanchonete.entities.Fornecedor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
 @Repository
-public  interface ProdutosRepository extends JpaRepository<Produtos, Integer> {
-    Optional<Produtos> findByProduto(String nome);
+public interface FornecedoreRepository extends JpaRepository<Fornecedor, Integer> {
+
+    Optional<Fornecedor> findByNome(String nome);
 }

@@ -1,20 +1,20 @@
 package com.teste.Lanchonete.dtos;
 
-import com.teste.Lanchonete.entities.Categorias;
+import com.teste.Lanchonete.entities.Categoria;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriasDto {
+public class CategoriaDto {
 
     Integer idCategoria;
     @NotBlank(message = "Nome da categoria não pode ser branco ou nulo!")
     String nomeCategoria;
 
-    public CategoriasDto(Categorias categorias) {
-        this.idCategoria = categorias.getIdCategoria();
-        this.nomeCategoria = categorias.getNomeCategoria();
+    public CategoriaDto(Categoria categoria) {
+        this.idCategoria = categoria.getIdCategoria();
+        this.nomeCategoria = categoria.getNomeCategoria();
     }
 }
