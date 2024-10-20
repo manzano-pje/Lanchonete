@@ -30,7 +30,7 @@ public class ProdutoDto {
         this.unidadeMedida = produto.getUnidadeMedida();
         this.valor = produto.getValor();
 
-        this.categoria = produto.getCategoria().getIdCategoria();
-        this.fornecedor = produto.getFornecedor().getIdFornecedor();
+        this.categoria = produto.getCategoria();
+        this.fornecedor = produto.getFornecedor();
     }
 }

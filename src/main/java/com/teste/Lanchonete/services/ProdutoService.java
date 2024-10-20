@@ -4,16 +4,13 @@ import com.teste.Lanchonete.dtos.ProdutoDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
-import com.teste.Lanchonete.interfaces.VerificacarProduto;
-import com.teste.Lanchonete.interfaces.VerificarCategoria;
-import com.teste.Lanchonete.interfaces.VerificarFornecedor;
+import com.teste.Lanchonete.interfaces.*;
 import com.teste.Lanchonete.repositories.CategoriaRepository;
 import com.teste.Lanchonete.repositories.FornecedoreRepository;
 import com.teste.Lanchonete.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,48 +21,46 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoService {
 
-    private final ProdutoRepository produtoRepository;
-    @Autowired
-    private final CategoriaRepository categoriaRepository;
+    private final BuscarFornecedorPorId buscarFornecedorPorId;
     private final FornecedoreRepository fornecedoreRepository;
-    private final VerificacarProduto verificacarProduto;
-    private final VerificarFornecedor verificarFornecedor;
-    private final VerificarCategoria verificarCategoria;
+    private final BuscarCategoriaPorId buscarCategoriaPorId;
+    private final CategoriaRepository categoriaRepository;
+    private final ProdutoRepository produtoRepository;
+    private final BuscarProdutoPorNome buscarProdutoPorNome;
+    private final BuscarTodosProdutos buscarTodosProdutos;
+    private final BuscarProdutoPorId buscarProdutoPorId;
     private final ModelMapper mapper;
   
     public ProdutoDto criarProdutos(ProdutoDto produtoDto){
 
-        verificacarProduto.verificarProdutoPorNome(produtoDto.getProduto());
-        Categoria categoria = verificarCategoria.buscarCategoriaPorId(produtoDto.getCategoria());
-        Fornecedor fornecedor = verificarFornecedor.verificarFornecedorPorId(produtoDto.getFornecedor());
+        buscarProdutoPorNome.buscarProdutoPorNome(produtoDto.getProduto());
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
+        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getFornecedor());
         Produto produto = mapper.map(produtoDto, Produto.class);
 
-        produto.setCategoria(categoria);
-        produto.setFornecedor(fornecedor);
+        produto.setCategoria(categoria.getIdCategoria());
+        produto.setFornecedor(fornecedor.getIdFornecedor());
         produtoRepository.save(produto);
         return mapper.map(produto, ProdutoDto.class);
     }
 
     public List<ProdutoDto> listarTodosProdutos(){
-        return verificacarProduto.listarTodosProdutos().
+        return buscarTodosProdutos.listarTodosProdutos().
                 stream().
                 map(ProdutoDto::new).
                 collect(Collectors.toList());
     }
 
     public ProdutoDto listarUmProduto(Integer id){
-            return verificacarProduto.listarProdutoPorId(id);
-
+            return buscarProdutoPorId.buscarProdutoPorId(id);
     }
 
     public void alterarUmProduto(Integer id, ProdutoDto produtoDto){
-        ProdutoDto nomeProdutos = verificacarProduto.listarProdutoPorId(id);
+        ProdutoDto nomeProdutos = buscarProdutoPorId.buscarProdutoPorId(id);
         Produto produto = mapper.map(nomeProdutos, Produto.class);
         produto.atualizar(produtoDto);
         produtoRepository.save(produto);
     }
-
-
 }
 
 

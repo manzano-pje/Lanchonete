@@ -6,8 +6,7 @@ import com.teste.Lanchonete.entities.Categoria;
  *  verificar categorias
  *
  */
-public interface VerificarCategoria {
+public interface BuscarCategoriaPorId {
 
-    void buscarCategoriaPorNome(String nome);
     Categoria buscarCategoriaPorId(Integer id);
 }

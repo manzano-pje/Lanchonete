@@ -25,12 +25,12 @@ public class Produto {
         if (produtoDto.getProduto() != null) {
             this.produto = produtoDto.getProduto();
         }
-//        if (produtoDto.getCategoria() != null) {
-//            this.categoria = verificarCategorias.buscarCategoriaPorId(produtoDto.getCategoria());
-//        }
-//        if (produtoDto.getFornecedor() != null) {
-//            this.fornecedor = verificarFornecedor.verificarFornecedorPorId(produtoDto.getFornecedor());
-//        }
+        if (produtoDto.getCategoria() != null) {
+            this.categoria = produtoDto.getCategoria();
+        }
+        if (produtoDto.getFornecedor() != null) {
+            this.fornecedor = produtoDto.getFornecedor();
+        }
         if (produtoDto.getUnidadeMedida() != null) {
             this.unidadeMedida = produtoDto.getUnidadeMedida();
         }
@@ -39,16 +39,15 @@ public class Produto {
         }
     }
 
-
     /******************
      * RELACIONAMENTOS
      ******************/
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFornecedor")
-    private Fornecedor fornecedor;
+    private @NonNull Integer fornecedor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idCategoria")
-    private Categoria categoria;
+    private Integer categoria;
 }

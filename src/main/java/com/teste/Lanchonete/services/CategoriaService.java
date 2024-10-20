@@ -4,7 +4,9 @@ import com.teste.Lanchonete.dtos.CategoriaDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.exceptions.ErroDoServidorException;
 import com.teste.Lanchonete.exceptions.NaoExitemCategoriasException;
-import com.teste.Lanchonete.interfaces.VerificarCategoria;
+import com.teste.Lanchonete.implementacoes.BuscarCategoriaPorIdImpl;
+import com.teste.Lanchonete.implementacoes.BuscarCategoriaPorNomeImpl;
+import com.teste.Lanchonete.interfaces.BuscarCategoriaPorId;
 import com.teste.Lanchonete.repositories.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,10 +22,11 @@ public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
     private final ModelMapper mapper;
-    private final VerificarCategoria verificarCategoria;
+    private final BuscarCategoriaPorIdImpl buscarCategoriaPorId;
+    private final BuscarCategoriaPorNomeImpl buscarCategoriaPorNome;
 
     public CategoriaDto criarCategorias(CategoriaDto categoriaDto) {
-        verificarCategoria.buscarCategoriaPorNome(categoriaDto.getNomeCategoria());
+        buscarCategoriaPorNome.buscarCategoriaPorNome(categoriaDto.getNomeCategoria());
         Categoria categoria = mapper.map(categoriaDto, Categoria.class);
         categoriaRepository.save(categoria);
         return mapper.map(categoria, CategoriaDto.class);
@@ -45,18 +48,18 @@ public class CategoriaService {
     }
 
     public CategoriaDto listarUmaCategoria(Integer idCategorias){
-       Categoria categoria = verificarCategoria.buscarCategoriaPorId(idCategorias);
+       Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(idCategorias);
        return mapper.map(categoria, CategoriaDto.class);
     }
 
     public void atualizarCategoria(Integer id, CategoriaDto categoriaDto){
-        Categoria categoria = verificarCategoria.buscarCategoriaPorId(id);
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(id);
         categoria.atualizar(categoriaDto);
         categoriaRepository.save(categoria);
     }
 
     public void excluirCategoria(Integer idCategorias){
-        Categoria categoria = verificarCategoria.buscarCategoriaPorId(idCategorias);
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(idCategorias);
         categoriaRepository.delete(categoria);
     }
 }
