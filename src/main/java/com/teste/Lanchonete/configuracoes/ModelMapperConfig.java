@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
 
-    
+
     public ModelMapperConfig() {
     }
 
@@ -16,3 +16,4 @@ public class ModelMapperConfig {
         return new ModelMapper();
     }
 }
+

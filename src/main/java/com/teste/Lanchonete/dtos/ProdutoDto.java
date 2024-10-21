@@ -1,6 +1,8 @@
 package com.teste.Lanchonete.dtos;
 
 import com.teste.Lanchonete.Enums.UnidadeMedida;
+import com.teste.Lanchonete.entities.Categoria;
+import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +26,12 @@ public class ProdutoDto {
     @NonNull
     Double valor;
 
-    public ProdutoDto(Produto produto) {
+    public ProdutoDto(Produto produto, Categoria categoria, Fornecedor fornecedor) {
         this.id = produto.getIdProduto();
         this.produto = produto.getProduto();
         this.unidadeMedida = produto.getUnidadeMedida();
         this.valor = produto.getValor();
-
-        this.categoria = produto.getCategoria();
-        this.fornecedor = produto.getFornecedor();
+        this.categoria = categoria.getIdCategoria();
+        this.fornecedor = fornecedor.getIdFornecedor();
     }
 }

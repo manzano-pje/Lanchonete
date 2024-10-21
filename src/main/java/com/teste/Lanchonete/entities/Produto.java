@@ -21,15 +21,15 @@ public class Produto {
     private UnidadeMedida unidadeMedida;
     Double valor;
 
-    public void atualizar(ProdutoDto produtoDto) {
+    public void atualizar(ProdutoDto produtoDto, Categoria categoria, Fornecedor fornecedor) {
         if (produtoDto.getProduto() != null) {
             this.produto = produtoDto.getProduto();
         }
         if (produtoDto.getCategoria() != null) {
-            this.categoria = produtoDto.getCategoria();
+            this.categoria = categoria;
         }
         if (produtoDto.getFornecedor() != null) {
-            this.fornecedor = produtoDto.getFornecedor();
+            this.fornecedor = fornecedor;
         }
         if (produtoDto.getUnidadeMedida() != null) {
             this.unidadeMedida = produtoDto.getUnidadeMedida();
@@ -45,9 +45,9 @@ public class Produto {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFornecedor")
-    private @NonNull Integer fornecedor;
+    private @NonNull Fornecedor fornecedor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idCategoria")
-    private Integer categoria;
+    private Categoria categoria;
 }
