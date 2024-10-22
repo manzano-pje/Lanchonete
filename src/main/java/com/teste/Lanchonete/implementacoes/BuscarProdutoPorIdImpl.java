@@ -6,6 +6,7 @@ import com.teste.Lanchonete.exceptions.ProdutoNaoCadastradoException;
 import com.teste.Lanchonete.interfaces.BuscarProdutoPorId;
 import com.teste.Lanchonete.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -13,11 +14,12 @@ import org.springframework.stereotype.Service;
 public class BuscarProdutoPorIdImpl implements BuscarProdutoPorId {
 
     private final ProdutoRepository produtoRepository;
+    private final ModelMapper mapper;
 
     @Override
     public ProdutoDto buscarProdutoPorId(Integer id) {
         Produto produto = produtoRepository.findById(id).
                 orElseThrow(ProdutoNaoCadastradoException::new);
-        return new ProdutoDto();
+        return mapper.map(produto, ProdutoDto.class);
     }
 }

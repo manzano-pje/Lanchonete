@@ -15,7 +15,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProduto;
+    private Integer id;
     private String produto;
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
@@ -24,12 +24,6 @@ public class Produto {
     public void atualizar(ProdutoDto produtoDto, Categoria categoria, Fornecedor fornecedor) {
         if (produtoDto.getProduto() != null) {
             this.produto = produtoDto.getProduto();
-        }
-        if (produtoDto.getCategoria() != null) {
-            this.categoria = categoria;
-        }
-        if (produtoDto.getFornecedor() != null) {
-            this.fornecedor = fornecedor;
         }
         if (produtoDto.getUnidadeMedida() != null) {
             this.unidadeMedida = produtoDto.getUnidadeMedida();

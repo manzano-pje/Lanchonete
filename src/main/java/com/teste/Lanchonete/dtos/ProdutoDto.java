@@ -18,20 +18,20 @@ public class ProdutoDto {
     @NonNull
     String produto;
     @NonNull
-    private Integer categoria;
+    Integer categoria;
     @NonNull
-    private Integer fornecedor;
+    Integer fornecedor;
     @NonNull
     private UnidadeMedida unidadeMedida;
     @NonNull
     Double valor;
 
-    public ProdutoDto(Produto produto, Categoria categoria, Fornecedor fornecedor) {
-        this.id = produto.getIdProduto();
+    public ProdutoDto(Produto produto) {
+        this.id = produto.getId();
         this.produto = produto.getProduto();
+        this.categoria = produto.getCategoria().getIdCategoria();
+        this.fornecedor = produto.getFornecedor().getIdFornecedor();
         this.unidadeMedida = produto.getUnidadeMedida();
         this.valor = produto.getValor();
-        this.categoria = categoria.getIdCategoria();
-        this.fornecedor = fornecedor.getIdFornecedor();
     }
 }
