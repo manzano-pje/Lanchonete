@@ -1,34 +1,28 @@
 package com.teste.Lanchonete.dtos;
 
 import com.teste.Lanchonete.Enums.UnidadeMedida;
+import com.teste.Lanchonete.entities.Categoria;
+import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoDto {
+public class RetornoProdutoDto {
 
-    private Integer id;
-    @NonNull
     private String produto;
-    @NonNull
-    private Integer categoria;
-    @NonNull
-    private Integer fornecedor;
-    @NonNull
-    private  UnidadeMedida unidadeMedida;
-    @NonNull
+    private String categoria;
+    private String fornecedor;
+    private UnidadeMedida unidadeMedida;
     private Double valor;
 
-    public ProdutoDto(Produto produto) {
-        this.id = produto.getId();
+    public RetornoProdutoDto(Produto produto){
         this.produto = produto.getProduto();
-        this.categoria = produto.getCategoria().getIdCategoria();
-        this.fornecedor = produto.getFornecedor().getIdFornecedor();
+        this.categoria = produto.getCategoria().getNomeCategoria();
+        this.fornecedor = produto.getFornecedor().getNome();
         this.unidadeMedida = produto.getUnidadeMedida();
         this.valor = produto.getValor();
     }

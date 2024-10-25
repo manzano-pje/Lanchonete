@@ -1,8 +1,7 @@
 package com.teste.Lanchonete.services;
 
-import com.teste.Lanchonete.dtos.CategoriaDto;
-import com.teste.Lanchonete.dtos.FornecedorDto;
 import com.teste.Lanchonete.dtos.ProdutoDto;
+import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
@@ -14,9 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -24,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoService {
 
-    private final BuscarFornecedorPorIdImpl buscarFornecedorPorId;
+    private final BuscarFornecedorPorCnpjImpl buscarFornecedorPorId;
     private final FornecedoreRepository fornecedoreRepository;
     private final BuscarCategoriaPorIdImpl buscarCategoriaPorId;
     private final CategoriaRepository categoriaRepository;
@@ -37,7 +34,7 @@ public class ProdutoService {
     public void criarProdutos(ProdutoDto produtoDto){
         buscarProdutoPorNome.buscarProdutoPorNome(produtoDto.getProduto());
         Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
-        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getFornecedor());
+        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorCnpj(produtoDto.getFornecedor().toString());
 
         Produto produto = mapper.map(produtoDto, Produto.class);
         produto.setCategoria(categoria);
@@ -53,15 +50,15 @@ public class ProdutoService {
                 collect(Collectors.toList());
     }
 
-    public ProdutoDto listarUmProduto(Integer id){
+    public RetornoProdutoDto listarUmProduto(Integer id){
         return buscarProdutoPorId.buscarProdutoPorId(id);
     }
 
     public void alterarUmProduto(Integer id, ProdutoDto produtoDto){
-        ProdutoDto produtos = buscarProdutoPorId.buscarProdutoPorId(id);
+        RetornoProdutoDto produtos = buscarProdutoPorId.buscarProdutoPorId(id);
         Produto produto = mapper.map(produtos, Produto.class);
-        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getId());
-        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getId());
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
+        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorCnpj(produtoDto.getFornecedor().toString());
         produto.atualizar(produtoDto, categoria, fornecedor);
         produto.setId(id);
         produtoRepository.save(produto);

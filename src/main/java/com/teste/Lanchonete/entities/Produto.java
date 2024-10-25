@@ -31,6 +31,9 @@ public class Produto {
         if (produtoDto.getValor() != null){
             this.valor = produtoDto.getValor();
         }
+
+        this.categoria.idCategoria = categoria.idCategoria;
+        this.fornecedor.idFornecedor = fornecedor.idFornecedor;
     }
 
     /******************
@@ -38,10 +41,10 @@ public class Produto {
      ******************/
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idFornecedor")
+    @JoinColumn(name = "id_Fornecedor")
     private @NonNull Fornecedor fornecedor;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idCategoria")
+    @JoinColumn(name = "id_Categoria")
     private Categoria categoria;
 }

@@ -28,21 +28,21 @@ public class FornecedorController {
         return ResponseEntity.ok().body(fornecedores);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<FornecedorDto> listarUmFornecedor(@PathVariable @Valid Integer id){
-        FornecedorDto fornecedorDto = fornecedorService.listarUmFornecedor(id);
+    @GetMapping("{cnpj}")
+    public ResponseEntity<FornecedorDto> listarUmFornecedor(@PathVariable @Valid String cnpj){
+        FornecedorDto fornecedorDto = fornecedorService.listarUmFornecedor(cnpj);
         return ResponseEntity.ok(fornecedorDto);
     }
 
-    @PatchMapping("/{id}`")
-    public ResponseEntity<Object> AlterarFornecedor(@PathVariable Integer id, @RequestBody @Valid FornecedorDto fornecedorDto){
-        fornecedorService.alterarFornecedor(id, fornecedorDto);
+    @PatchMapping("/{cnpj}`")
+    public ResponseEntity<Object> AlterarFornecedor(@PathVariable String cnpj, @RequestBody @Valid FornecedorDto fornecedorDto){
+        fornecedorService.alterarFornecedor(cnpj, fornecedorDto);
         return ResponseEntity.ok("Atualização do " + fornecedorDto.getNome() + "efetuada com sucesso!");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> excluirFornecedor(@PathVariable @Valid Integer id){
-        fornecedorService.excluirFornecedor(id);
+    @DeleteMapping("/{cnpj}")
+    public ResponseEntity<Object> excluirFornecedor(@PathVariable @Valid String cnpj){
+        fornecedorService.excluirFornecedor(cnpj);
         return  ResponseEntity.ok("Fornecedor excluído com sucesso!");
     }
 }
