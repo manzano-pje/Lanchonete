@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class BuscarProdutoPorNomeImp implements BuscarProdutoPorNome {
+public class BuscarProdutoPorNomeImpl implements BuscarProdutoPorNome {
     private final ProdutoRepository produtoRepository;
 
     @Override

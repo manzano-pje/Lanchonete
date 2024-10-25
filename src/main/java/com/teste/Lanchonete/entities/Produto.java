@@ -15,21 +15,15 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProduto;
+    private Integer id;
     private String produto;
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
     Double valor;
 
-    public void atualizar(ProdutoDto produtoDto) {
+    public void atualizar(ProdutoDto produtoDto, Categoria categoria, Fornecedor fornecedor) {
         if (produtoDto.getProduto() != null) {
             this.produto = produtoDto.getProduto();
-        }
-        if (produtoDto.getCategoria() != null) {
-            this.categoria = produtoDto.getCategoria();
-        }
-        if (produtoDto.getFornecedor() != null) {
-            this.fornecedor = produtoDto.getFornecedor();
         }
         if (produtoDto.getUnidadeMedida() != null) {
             this.unidadeMedida = produtoDto.getUnidadeMedida();
@@ -37,6 +31,9 @@ public class Produto {
         if (produtoDto.getValor() != null){
             this.valor = produtoDto.getValor();
         }
+
+        this.categoria.idCategoria = categoria.idCategoria;
+        this.fornecedor.idFornecedor = fornecedor.idFornecedor;
     }
 
     /******************
@@ -44,10 +41,10 @@ public class Produto {
      ******************/
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idFornecedor")
-    private @NonNull Integer fornecedor;
+    @JoinColumn(name = "id_Fornecedor")
+    private @NonNull Fornecedor fornecedor;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idCategoria")
-    private Integer categoria;
+    @JoinColumn(name = "id_Categoria")
+    private Categoria categoria;
 }

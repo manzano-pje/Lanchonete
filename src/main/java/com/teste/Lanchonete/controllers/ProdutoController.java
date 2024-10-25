@@ -1,6 +1,7 @@
 package com.teste.Lanchonete.controllers;
 
 import com.teste.Lanchonete.dtos.ProdutoDto;
+import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.services.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ProdutoDto listarUmProduto(@PathVariable Integer id){
+    public RetornoProdutoDto listarUmProduto(@PathVariable Integer id){
         return produtoService.listarUmProduto(id);
     }
 
