@@ -32,8 +32,8 @@ public class Produto {
             this.valor = produtoDto.getValor();
         }
 
-        this.categoria.idCategoria = categoria.idCategoria;
-        this.fornecedor.idFornecedor = fornecedor.idFornecedor;
+        this.categoria = categoria;
+        this.fornecedor = fornecedor;
     }
 
     /******************

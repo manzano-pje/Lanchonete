@@ -42,4 +42,10 @@ public class ProdutoController {
         produtoService.alterarUmProduto(id, produtoDto);
         return ResponseEntity.status(HttpStatus.OK).body("Produto alterado com sucesso");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> excluirUmProduto(@PathVariable Integer id){
+        produtoService.excluirUmProduto(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Produto excluído com sucersso!");
+    }
 }
