@@ -4,10 +4,9 @@ import com.teste.Lanchonete.configuracoes.FormatarTexto;
 import com.teste.Lanchonete.dtos.FornecedorDto;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.exceptions.FornecedorJaExisteException;
-import com.teste.Lanchonete.exceptions.NaoExistemFornecedoresException;
 import com.teste.Lanchonete.implementacoes.BuscarFornecedorPorCnpjImpl;
 import com.teste.Lanchonete.implementacoes.BuscarTodosFornecedoresImpl;
-import com.teste.Lanchonete.repositories.FornecedoreRepository;
+import com.teste.Lanchonete.repositories.FornecedorRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,19 +21,19 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FornecedorService {
 
-    private final FornecedoreRepository fornecedoreRepository;
+    private final FornecedorRepository fornecedorRepository;
     private final ModelMapper mapper;
     private final FormatarTexto formatarTexto;
     private final BuscarFornecedorPorCnpjImpl buscarFornecedorPorCnpj;
     private final BuscarTodosFornecedoresImpl buscarTodosFornecedores;
 
     public FornecedorDto criarFornecedores(FornecedorDto fornecedorDto){
-        Optional<Fornecedor> optionalFornecedor = fornecedoreRepository.findByCnpj(fornecedorDto.getCnpj());
+        Optional<Fornecedor> optionalFornecedor = fornecedorRepository.findByCnpj(fornecedorDto.getCnpj());
         if(optionalFornecedor.isPresent()){
             throw new FornecedorJaExisteException();
         }
        Fornecedor fornecedor = mapper.map(fornecedorDto, Fornecedor.class);
-       fornecedoreRepository.save(fornecedor);
+       fornecedorRepository.save(fornecedor);
        return mapper.map(fornecedor, FornecedorDto.class);
     }
 
@@ -53,10 +52,10 @@ public class FornecedorService {
     public void alterarFornecedor(String cnpj, FornecedorDto fornecedorDto){
         Fornecedor dadosFornecedor = buscarFornecedorPorCnpj.buscarFornecedorPorCnpj(cnpj);
         dadosFornecedor.atualizar(fornecedorDto);
-        fornecedoreRepository.save(dadosFornecedor);
+        fornecedorRepository.save(dadosFornecedor);
     }
 
     public void excluirFornecedor(String cnpj){
-        fornecedoreRepository.deleteById(buscarFornecedorPorCnpj.buscarFornecedorPorCnpj(cnpj).getIdFornecedor());
+        fornecedorRepository.deleteById(buscarFornecedorPorCnpj.buscarFornecedorPorCnpj(cnpj).getIdFornecedor());
     }
 }
