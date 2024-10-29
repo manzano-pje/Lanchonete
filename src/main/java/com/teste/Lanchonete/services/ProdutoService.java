@@ -5,6 +5,7 @@ import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
+import com.teste.Lanchonete.exceptions.QuantidadeInvalidaExciption;
 import com.teste.Lanchonete.implementacoes.*;
 import com.teste.Lanchonete.repositories.CategoriaRepository;
 import com.teste.Lanchonete.repositories.FornecedorRepository;
@@ -43,16 +44,15 @@ public class ProdutoService {
         produtoRepository.save(produto);
     }
 
-    public List<ProdutoDto> listarTodosProdutos(){
+    public List<RetornoProdutoDto> listarTodosProdutos(){
         List<Produto> produtos = buscarTodosProdutos.listarTodosProdutos();
         return produtos.
                 stream().
-                map(ProdutoDto::new).
+                map(RetornoProdutoDto::new).
                 collect(Collectors.toList());
     }
 
     public RetornoProdutoDto listarUmProduto(Integer id){
-
         return buscarProdutoPorId.buscarProdutoPorId(id);
     }
 
@@ -61,6 +61,7 @@ public class ProdutoService {
         Produto produto = mapper.map(produtos, Produto.class);
         Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
         Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getFornecedor());
+
         produto.atualizar(produtoDto, categoria, fornecedor);
         produto.setId(id);
         produtoRepository.save(produto);

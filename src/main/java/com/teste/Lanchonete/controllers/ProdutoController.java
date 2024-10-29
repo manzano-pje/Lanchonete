@@ -26,8 +26,8 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<ProdutoDto> listarTodosProdutos(){
-        List<ProdutoDto> listaProdutoDto = produtoService.listarTodosProdutos();
+    public List<RetornoProdutoDto> listarTodosProdutos(){
+        List<RetornoProdutoDto> listaProdutoDto = produtoService.listarTodosProdutos();
         return listaProdutoDto;
 
     }

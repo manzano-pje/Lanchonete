@@ -66,6 +66,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({DataInvalidaException.class})
+    public ResponseEntity<Object> handleDataInvalidaException(DataInvalidaException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.PRECONDITION_FAILED);
+    }
+
+    @ExceptionHandler({QuantidadeInvalidaExciption.class})
+    public ResponseEntity<Object> handleQuantidadeInvalidaExciption(QuantidadeInvalidaExciption ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
+    }
+
 
 
     // Captura erros gerais de sistema

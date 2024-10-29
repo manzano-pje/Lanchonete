@@ -1,6 +1,5 @@
 package com.teste.Lanchonete.implementacoes;
 
-import com.teste.Lanchonete.dtos.ProdutoDto;
 import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.entities.Produto;
 import com.teste.Lanchonete.exceptions.ProdutoNaoCadastradoException;
@@ -21,6 +20,6 @@ public class BuscarProdutoPorIdImpl implements BuscarProdutoPorId {
     public RetornoProdutoDto buscarProdutoPorId(Integer id) {
         Produto produto = produtoRepository.findById(id).
                 orElseThrow(ProdutoNaoCadastradoException::new);
-        return mapper.map(produto, RetornoProdutoDto.class);
+        return new RetornoProdutoDto(produto);
     }
 }

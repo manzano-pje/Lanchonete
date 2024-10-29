@@ -1,9 +1,12 @@
 package com.teste.Lanchonete.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.teste.Lanchonete.Enums.UnidadeMedida;
 import com.teste.Lanchonete.dtos.ProdutoDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -20,6 +23,12 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
     Double valor;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date dataCadastro;
+    private Integer quantidade;
+    private Integer estoqueMinimo;
+
+
 
     public void atualizar(ProdutoDto produtoDto, Categoria categoria, Fornecedor fornecedor) {
         if (produtoDto.getProduto() != null) {
@@ -32,9 +41,22 @@ public class Produto {
             this.valor = produtoDto.getValor();
         }
 
-        this.categoria = categoria;
-        this.fornecedor = fornecedor;
+        if (produtoDto.getQuantidade() != null){
+            this.quantidade = produtoDto.getQuantidade();
+        }
+
+        if (produtoDto.getEstoqueMinimo() != null){
+            this.estoqueMinimo = produtoDto.getEstoqueMinimo();
+        }
+        if (produtoDto.getCategoria() != null) {
+            this.categoria = categoria;
+        }
+
+        if (produtoDto.getFornecedor() != null) {
+            this.fornecedor = fornecedor;
+        }
     }
+
 
     /******************
      * RELACIONAMENTOS

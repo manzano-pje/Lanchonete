@@ -23,6 +23,8 @@ public class ProdutoDto {
     private  UnidadeMedida unidadeMedida;
     @NonNull
     private Double valor;
+    private Integer quantidade;
+    private Integer estoqueMinimo;
 
     public ProdutoDto(Produto produto) {
         this.id = produto.getId();
@@ -31,5 +33,7 @@ public class ProdutoDto {
         this.fornecedor = produto.getFornecedor().getIdFornecedor();
         this.unidadeMedida = produto.getUnidadeMedida();
         this.valor = produto.getValor();
+        this.quantidade = produto.getQuantidade();
+        this.estoqueMinimo = produto.getEstoqueMinimo();
     }
 }
