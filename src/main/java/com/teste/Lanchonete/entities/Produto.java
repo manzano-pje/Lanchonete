@@ -48,15 +48,15 @@ public class Produto {
         if (produtoDto.getEstoqueMinimo() != null){
             this.estoqueMinimo = produtoDto.getEstoqueMinimo();
         }
-
         if (produtoDto.getCategoria() != null) {
-            this.categoria.idCategoria = categoria.idCategoria;
+            this.categoria = categoria;
         }
 
         if (produtoDto.getFornecedor() != null) {
-            this.fornecedor.idFornecedor = fornecedor.idFornecedor;
+            this.fornecedor = fornecedor;
         }
     }
+
 
     /******************
      * RELACIONAMENTOS

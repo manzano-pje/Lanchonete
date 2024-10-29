@@ -5,21 +5,16 @@ import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
-import com.teste.Lanchonete.exceptions.DataInvalidaException;
-import com.teste.Lanchonete.exceptions.ErroDoServidorException;
+import com.teste.Lanchonete.exceptions.QuantidadeInvalidaExciption;
 import com.teste.Lanchonete.implementacoes.*;
 import com.teste.Lanchonete.repositories.CategoriaRepository;
-import com.teste.Lanchonete.repositories.FornecedoreRepository;
+import com.teste.Lanchonete.repositories.FornecedorRepository;
 import com.teste.Lanchonete.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,8 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoService {
 
-    private final BuscarFornecedorPorCnpjImpl buscarFornecedorPorId;
-    private final FornecedoreRepository fornecedoreRepository;
+    private final BuscarFornecedorPorCnpjImpl buscarFornecedorPorCnpj;
+    private final BuscarFornecedorPorIdImpl buscarFornecedorPorId;
+    private final FornecedorRepository fornecedorRepository;
     private final BuscarCategoriaPorIdImpl buscarCategoriaPorId;
     private final CategoriaRepository categoriaRepository;
     private final ProdutoRepository produtoRepository;
@@ -40,13 +36,11 @@ public class ProdutoService {
     public void criarProdutos(ProdutoDto produtoDto){
         buscarProdutoPorNome.buscarProdutoPorNome(produtoDto.getProduto());
         Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
-        Optional<Fornecedor> fornecedor = fornecedoreRepository.findById(produtoDto.getFornecedor());
-        Date data = new Date();
+        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getFornecedor());
 
         Produto produto = mapper.map(produtoDto, Produto.class);
         produto.setCategoria(categoria);
-        produto.setFornecedor(fornecedor.get());
-        produto.setDataCadastro(data);
+        produto.setFornecedor(fornecedor);
         produtoRepository.save(produto);
     }
 
@@ -64,19 +58,18 @@ public class ProdutoService {
 
     public void alterarUmProduto(Integer id, ProdutoDto produtoDto){
         RetornoProdutoDto produtos = buscarProdutoPorId.buscarProdutoPorId(id);
-
-        if((produtos.getQuantidade() + produtoDto.getQuantidade() > produtos.getEstoqueMinimo())){
-            throw new DataInvalidaException();
-        }
-
-        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
-        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorCnpj(produtoDto.getFornecedor().toString());
-
         Produto produto = mapper.map(produtos, Produto.class);
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
+        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorId(produtoDto.getFornecedor());
 
         produto.atualizar(produtoDto, categoria, fornecedor);
         produto.setId(id);
         produtoRepository.save(produto);
+    }
+
+    public  void excluirUmProduto(Integer id){
+        buscarProdutoPorId.buscarProdutoPorId(id);
+        produtoRepository.deleteById(id);
     }
 }
 

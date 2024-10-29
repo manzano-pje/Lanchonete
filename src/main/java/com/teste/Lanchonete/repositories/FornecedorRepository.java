@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FornecedoreRepository extends JpaRepository<Fornecedor, Integer> {
+public interface FornecedorRepository extends JpaRepository<Fornecedor, Integer> {
 
     Optional<Fornecedor> findByCnpj(String cnpj);
+    Optional<Fornecedor> findById(Integer id);
+
 }
