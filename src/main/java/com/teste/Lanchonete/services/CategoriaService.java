@@ -47,8 +47,8 @@ public class CategoriaService {
         }
     }
 
-    public CategoriaDto listarUmaCategoria(Integer idCategorias){
-       Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(idCategorias);
+    public CategoriaDto listarUmaCategoria(Integer id){
+       Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(id);
        return mapper.map(categoria, CategoriaDto.class);
     }
 
@@ -58,8 +58,8 @@ public class CategoriaService {
         categoriaRepository.save(categoria);
     }
 
-    public void excluirCategoria(Integer idCategorias){
-        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(idCategorias);
+    public void excluirCategoria(Integer id){
+        Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(id);
         categoriaRepository.delete(categoria);
     }
 }

@@ -5,6 +5,8 @@ import com.teste.Lanchonete.dtos.RetornoProdutoDto;
 import com.teste.Lanchonete.entities.Categoria;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.entities.Produto;
+import com.teste.Lanchonete.exceptions.DataInvalidaException;
+import com.teste.Lanchonete.exceptions.ErroDoServidorException;
 import com.teste.Lanchonete.implementacoes.*;
 import com.teste.Lanchonete.repositories.CategoriaRepository;
 import com.teste.Lanchonete.repositories.FornecedoreRepository;
@@ -13,7 +15,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -34,19 +40,21 @@ public class ProdutoService {
     public void criarProdutos(ProdutoDto produtoDto){
         buscarProdutoPorNome.buscarProdutoPorNome(produtoDto.getProduto());
         Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
-        Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorCnpj(produtoDto.getFornecedor().toString());
+        Optional<Fornecedor> fornecedor = fornecedoreRepository.findById(produtoDto.getFornecedor());
+        Date data = new Date();
 
         Produto produto = mapper.map(produtoDto, Produto.class);
         produto.setCategoria(categoria);
-        produto.setFornecedor(fornecedor);
+        produto.setFornecedor(fornecedor.get());
+        produto.setDataCadastro(data);
         produtoRepository.save(produto);
     }
 
-    public List<ProdutoDto> listarTodosProdutos(){
+    public List<RetornoProdutoDto> listarTodosProdutos(){
         List<Produto> produtos = buscarTodosProdutos.listarTodosProdutos();
         return produtos.
                 stream().
-                map(ProdutoDto::new).
+                map(RetornoProdutoDto::new).
                 collect(Collectors.toList());
     }
 
@@ -56,9 +64,16 @@ public class ProdutoService {
 
     public void alterarUmProduto(Integer id, ProdutoDto produtoDto){
         RetornoProdutoDto produtos = buscarProdutoPorId.buscarProdutoPorId(id);
-        Produto produto = mapper.map(produtos, Produto.class);
+
+        if((produtos.getQuantidade() + produtoDto.getQuantidade() > produtos.getEstoqueMinimo())){
+            throw new DataInvalidaException();
+        }
+
         Categoria categoria = buscarCategoriaPorId.buscarCategoriaPorId(produtoDto.getCategoria());
         Fornecedor fornecedor = buscarFornecedorPorId.buscarFornecedorPorCnpj(produtoDto.getFornecedor().toString());
+
+        Produto produto = mapper.map(produtos, Produto.class);
+
         produto.atualizar(produtoDto, categoria, fornecedor);
         produto.setId(id);
         produtoRepository.save(produto);
