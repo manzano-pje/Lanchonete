@@ -27,6 +27,7 @@ public class CategoriaService {
 
     public CategoriaDto criarCategorias(CategoriaDto categoriaDto) {
         buscarCategoriaPorNome.buscarCategoriaPorNome(categoriaDto.getNomeCategoria());
+
         Categoria categoria = mapper.map(categoriaDto, Categoria.class);
         categoriaRepository.save(categoria);
         return mapper.map(categoria, CategoriaDto.class);

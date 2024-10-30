@@ -76,6 +76,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler({ClienteJaCadastradoException.class})
+    public ResponseEntity<Object> handleClienteJaCadastradoException(ClienteJaCadastradoException ex) {
+        return new ResponseEntity(ex.paraJson(), HttpStatus.CONFLICT);
+    }
+
 
 
     // Captura erros gerais de sistema
