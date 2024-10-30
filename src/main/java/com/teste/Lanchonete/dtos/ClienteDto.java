@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.br.CPF;
 
+/**
+ *  cliente dto
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -42,17 +46,19 @@ public class ClienteDto {
     private String telefone;
 
     public ClienteDto(Cliente cliente) {
-        this.idCliente = getIdCliente();
-        this.nome = getNome();
-        this.cpf = getCpf();
-        this.endereco = getEndereco();
-        this.numero = getNumero();
-        this.complemento = getComplemento();
-        this.bairro = getBairro();
-        this.cidade = getCidade();
-        this.uf = getUf();
-        this.cep = getCep();
-        this.email = getEmail();
-        this.telefone = getTelefone();
+        this.idCliente = cliente.getIdCliente();
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+        this.endereco = cliente.getEndereco();
+        this.numero = cliente.getNumero();
+        this.complemento = cliente.getComplemento();
+        this.bairro = cliente.getBairro();
+        this.cidade = cliente.getCidade();
+        this.uf = cliente.getUf();
+        this.cep = cliente.getCep();
+        this.email = cliente.getEmail();
+        this.telefone = cliente.getTelefone();
     }
+
+
 }
