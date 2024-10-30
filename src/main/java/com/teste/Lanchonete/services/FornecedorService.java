@@ -1,6 +1,5 @@
 package com.teste.Lanchonete.services;
 
-import com.teste.Lanchonete.configuracoes.FormatarTexto;
 import com.teste.Lanchonete.dtos.FornecedorDto;
 import com.teste.Lanchonete.entities.Fornecedor;
 import com.teste.Lanchonete.exceptions.FornecedorJaExisteException;
@@ -23,7 +22,6 @@ public class FornecedorService {
 
     private final FornecedorRepository fornecedorRepository;
     private final ModelMapper mapper;
-    private final FormatarTexto formatarTexto;
     private final BuscarFornecedorPorCnpjImpl buscarFornecedorPorCnpj;
     private final BuscarTodosFornecedoresImpl buscarTodosFornecedores;
 
